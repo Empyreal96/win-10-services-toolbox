@@ -109,7 +109,7 @@ goto home
 :routine
 mode con:cols=80 lines=18
 reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
-sc stop WerSvc
+sc.exe stop WerSvc
 sc.exe config WerSvc start=disabled
 sc.exe stop DiagTrack
 sc.exe config DiagTrack start=disabled
