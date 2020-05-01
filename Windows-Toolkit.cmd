@@ -917,6 +917,8 @@ echo 60) Microsoft-Windows-NetFx-VCRedist-Package
 echo 61) Microsoft-Windows-Printing-PrintToPDFServices-Package
 echo 62) Microsoft-Windows-Printing-XPSServices-Package
 echo 63) Microsoft-Windows-Client-EmbeddedExp-Package
+echo 64) Back to features menu
+echo 65) Exit
 echo.
 echo.
 echo.
@@ -934,6 +936,8 @@ if "%web%"=="60" DISM /online /enable-feature /featurename:Microsoft-Windows-Net
 if "%web%"=="61" DISM /online /enable-feature /featurename:Microsoft-Windows-Printing-PrintToPDFServices-Package
 if "%web%"=="62" DISM /online /enable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
 if "%web%"=="63" DISM /online /enable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
+if "%web%"=="64" goto winfeaturesmenu
+if "%web%"=="65" goto exit
 goto addwinfeat2
 
 
@@ -1085,6 +1089,8 @@ echo 60) Microsoft-Windows-NetFx-VCRedist-Package
 echo 61) Microsoft-Windows-Printing-PrintToPDFServices-Package
 echo 62) Microsoft-Windows-Printing-XPSServices-Package
 echo 63) Microsoft-Windows-Client-EmbeddedExp-Package
+echo 64) Back to features menu
+echo 65) Exit
 echo.
 echo.
 echo.
@@ -1102,6 +1108,8 @@ if "%web%"=="60" DISM /online /disable-feature /featurename:Microsoft-Windows-Ne
 if "%web%"=="61" DISM /online /disable-feature /featurename:Microsoft-Windows-Printing-PrintToPDFServices-Package
 if "%web%"=="62" DISM /online /disable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
 if "%web%"=="63" DISM /online /disable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
+if "%web%"=="64" goto winfeaturesmenu
+if "%web%"=="65" goto exit
 goto remwinfeat2
 
 :viewmetro
