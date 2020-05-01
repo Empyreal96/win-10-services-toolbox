@@ -770,7 +770,7 @@ if "%web%"=="5" goto exit
 goto syshealthmenu
 
 :addwinfeat
-mode con:cols=80 lines=22
+mode con:cols=80 lines=40
 echo.
 echo Here you will be able to add Windows Optional Features
 echo.
@@ -838,6 +838,7 @@ goto addwinfeat
 
 
 :addwinfeat1
+mode con:cols=80 lines=40
 echo.
 echo 26) SMB1Protocol
 echo 27) Microsoft-Hyper-V-All
@@ -901,6 +902,7 @@ goto addwinfeat1
 
 
 :addwinfeat2
+mode con:cols=80 lines=40
 echo.
 echo 51) Client-EmbeddedBootExp
 echo 52) Client-EmbeddedLogon
@@ -936,7 +938,7 @@ goto addwinfeat2
 
 
 :remwinfeat
-mode con:cols=80 lines=22
+mode con:cols=80 lines=40
 echo.
 echo Here you will be able to remove Windows Optional Features
 echo.
@@ -1004,6 +1006,7 @@ goto remwinfeat
 
 
 :remwinfeat1
+mode con:cols=80 lines=40
 echo.
 echo 26) SMB1Protocol
 echo 27) Microsoft-Hyper-V-All
@@ -1067,6 +1070,7 @@ goto remwinfeat1
 
 
 :remwinfeat2
+mode con:cols=80 lines=40
 echo.
 echo 51) Client-EmbeddedBootExp
 echo 52) Client-EmbeddedLogon
