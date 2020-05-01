@@ -1165,5 +1165,47 @@ SFC /scannow
 pause
 goto syshealthmenu
 
+:nobloat
+cls
+echo.
+echo This will attempt to remove built in 'Bloatware'
+echo apps like News, Get Help, 3DViewer, OneNote etc.
+echo *Success may vary due to different Windows versions, 
+echo Appx Package name changes and other factors*
+echo.
+pause
+powershell.exe "Get-AppxPackage *Microsoft.BingNews* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.GetHelp* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Getstarted* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Microsoft3DViewer* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.MicrosoftOfficeHub* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.MicrosoftSolitaireCollection* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.NetworkSpeedTest* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Office.OneNote* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Office.Sway* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.OneConnect* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Print3D* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.RemoteDesktop* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.SkypeApp* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.WindowsAlarms* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.WindowsFeedbackHub* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.WindowsMaps* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.WindowsSoundRecorder* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.Xbox.TCUI* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.XboxApp* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.XboxGameOverlay* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.XboxIdentityProvider* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.XboxSpeechToTextOverlay* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.ZuneMusic* | Remove-AppxPackage"
+powershell.exe "Get-AppxPackage *Microsoft.ZuneVideo* | Remove-AppxPackage"
+cls
+echo.
+echo.
+echo Finished. Some removal of Apps may have failed due to different Windows Builds,
+echo different installed Apps and a few other variations.. This will be updated as and when
+echo.
+pause
+goto metrouimenu
 
-
+:yesbloat
+echo This is coming soon
