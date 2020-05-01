@@ -10,7 +10,7 @@ echo Any issues, feedback or suggestions contact @Empyreal96 on Github
 echo Powershell Feature options scripted by @BeckarAC on Github
 echo.
 echo This script will let you control different parts of Windows, for example:
-echo Windows Update/Cortana/Telemetry/Search/Spotlight/OneDrive etc. 
+echo Windows Services, Checking System Files, Modifying Features and Apps etc.
 echo.
 echo This message will appear once more after gaining Admin permissions.
 echo.
@@ -69,7 +69,7 @@ cls
 echo.
 echo This tool will allow you to disable various components of Windows or enable
 echo various parts of Windows, each section contains different tweaks for different
-echo situations i.e Windows Update, Search, Cortana and Spotlight etc..
+echo situations i.e Windows Update, Search, Features, Apps etc..
 echo any issues contact @Empyreal96 at xda-developers.com
 echo.
 echo.
@@ -695,8 +695,7 @@ goto powershellmenu
 :metrouimenu
 mode con:cols=80 lines=22
 echo.
-echo Here you can modify built-in Windows Apps.
-echo excluding Windows Mail etc.
+echo Here you can modify built-in bloat Windows Apps.
 echo.
 echo.
 echo 1) Remove all 'Bloat' Apps
@@ -715,6 +714,7 @@ mode con:cols=80 lines=22
 echo.
 echo Here you can add or remove various Windows Features like
 echo .NET Framework, Windows Subsystem Linux etc.
+echo This section was added by @BeckarAC at Github
 echo.
 echo.
 echo 1) Add Features
