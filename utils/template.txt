@@ -1,0 +1,22 @@
+##This is the base of a menu##
+:name_of_menu/section
+mode con:cols=80 lines=22
+echo.
+echo 
+echo.
+echo.
+echo 1) 
+echo 2) 
+echo 3) 
+echo 4) 
+echo 5) 
+echo 6) 
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" Type-Command e.g goto 
+if "%web%"=="2" 
+if "%web%"=="3" 
+if "%web%"=="4" 
+if "%web%"=="5" 
+if "%web%"=="6" 
