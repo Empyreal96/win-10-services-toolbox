@@ -6,7 +6,8 @@ echo I made this script using various bits of info I found using
 echo the Microsoft site and a few forum boards. I have tested
 echo this and use it frequently, and will continue to improve this script.
 echo Tested on Windows 10: Home and Pro on x64 and ARM64.
-echo Any issues contact @Empyreal96 on xda-developers.com
+echo Any issues, feedback or suggestions contact @Empyreal96 on Github
+echo Powershell Feature options scripted by @BeckarAC on Github
 echo.
 echo This script will let you control different parts of Windows, for example:
 echo Windows Update/Cortana/Telemetry/Search/Spotlight/OneDrive etc. 
