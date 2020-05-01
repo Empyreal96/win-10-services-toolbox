@@ -1,0 +1,349 @@
+:nobloat
+mode con:cols=80 lines=22
+echo.
+echo.
+echo.
+echo.
+echo.
+powershell.exe "Get-AppxPackage Microsoft.BingWeather | Remove-AppxPackage"
+
+
+:yesbloat
+mode con:cols=80 lines=22
+echo.
+echo.
+echo.
+echo.
+echo.
+
+
+:addwinfeat
+mode con:cols=80 lines=22
+echo.
+echo Here you will be able to add Windows Optional Features
+echo.
+echo.
+echo.
+echo 1) Microsoft-Windows-Subsystem-Linux
+echo 2) LegacyComponents
+echo 3) DirectPlay
+echo 4) SimpleTCP
+echo 5) SNMP
+echo 6) WMISnmpProvider
+echo 7) MicrosoftWindowsPowerShellV2Root
+echo 8) MicrosoftWindowsPowerShellV2
+echo 9) Windows-Identity-Foundation
+echo 10) Internet-Explorer-Optional-amd64
+echo 11) NetFx3
+echo 12) NetFx4-AdvSrvs
+echo 13) NetFx4Extended-ASPNET45
+echo 14) MediaPlayback
+echo 15) WindowsMediaPlayer
+echo 16) Printing-PrintToPDFServices-Features
+echo 17) Printing-XPSServices-Features
+echo 18) RasRip
+echo 19) MSRDC-Infrastructure
+echo 20) SearchEngine-Client-Package
+echo 21) TelnetClient
+echo 22) TFTP
+echo 23) Xps-Foundation-Xps-Viewer
+echo 24) WorkFolders-Client
+echo 25) Next Page
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" DISM /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux
+if "%web%"=="2" DISM /online /enable-feature /featurename:LegacyComponents && pause && goto addwinfeat
+if "%web%"=="3" DISM /online /enable-feature /featurename:DirectPlay
+if "%web%"=="4" DISM /online /enable-feature /featurename:SimpleTCP
+if "%web%"=="5" DISM /online /enable-feature /featurename:SNMP
+if "%web%"=="6" DISM /online /enable-feature /featurename:WMISnmpProvider
+if "%web%"=="7" DISM /online /enable-feature /featurename:MicrosoftWindowsPowerShellV2Root
+if "%web%"=="8" DISM /online /enable-feature /featurename:MicrosoftWindowsPowerShellV2
+if "%web%"=="9" DISM /online /enable-feature /featurename:Windows-Identity-Foundation
+if "%web%"=="10" DISM /online /enable-feature /featurename:Internet-Explorer-Optional-amd64
+if "%web%"=="11" DISM /online /enable-feature /featurename:NetFx3
+if "%web%"=="12" DISM /online /enable-feature /featurename:NetFx4-AdvSrvs
+if "%web%"=="13" DISM /online /enable-feature /featurename:NetFx4Extended-ASPNET45
+if "%web%"=="14" DISM /online /enable-feature /featurename:MediaPlayback
+if "%web%"=="15" DISM /online /enable-feature /featurename:WindowsMediaPlayer
+if "%web%"=="16" DISM /online /enable-feature /featurename:Printing-PrintToPDFServices-Features
+if "%web%"=="17" DISM /online /enable-feature /featurename:Printing-XPSServices-Features
+if "%web%"=="18" DISM /online /enable-feature /featurename:RasRip
+if "%web%"=="19" DISM /online /enable-feature /featurename:MSRDC-Infrastructure
+if "%web%"=="20" DISM /online /enable-feature /featurename:SearchEngine-Client-Package
+if "%web%"=="21" DISM /online /enable-feature /featurename:TelnetClient
+if "%web%"=="22" DISM /online /enable-feature /featurename:TFTP
+if "%web%"=="23" DISM /online /enable-feature /featurename:Xps-Foundation-Xps-Viewer
+if "%web%"=="24" DISM /online /enable-feature /featurename:WorkFolders-Client
+if "%web%"=="25" goto addwinfeat1
+goto addwinfeat
+
+
+
+
+
+
+:addwinfeat1
+echo.
+echo 26) SMB1Protocol
+echo 27) Microsoft-Hyper-V-All
+echo 28) Microsoft-Hyper-V-Tools-All
+echo 29) Microsoft-Hyper-V-Management-Clients
+echo 30) Microsoft-Hyper-V-Management-PowerShell
+echo 31) Microsoft-Hyper-V
+echo 32) Microsoft-Hyper-V-Hypervisor
+echo 33) Microsoft-Hyper-V-Services
+echo 34) Printing-Foundation-Features
+echo 35) Printing-Foundation-LPRPortMonitor
+echo 36) Printing-Foundation-LPDPrintService
+echo 37) Printing-Foundation-InternetPrinting-Client
+echo 38) FaxServicesClientPackage
+echo 39) ScanManagementConsole
+echo 40) DirectoryServices-ADAM-Client
+echo 41) ServicesForNFS-ClientOnly
+echo 42) ClientForNFS-Infrastructure
+echo 43) NFS-Administration
+echo 44) RasCMAK
+echo 45) TIFFIFilter
+echo 46) SmbDirect
+echo 47) Containers
+echo 48) Client-DeviceLockdown
+echo 49) Client-EmbeddedShellLauncher
+echo 50) Next Page
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="26" DISM /online /enable-feature /featurename:SMB1Protocol
+if "%web%"=="27" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-All
+if "%web%"=="28" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Tools-All
+if "%web%"=="29" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Management-Clients
+if "%web%"=="30" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Management-PowerShell
+if "%web%"=="31" DISM /online /enable-feature /featurename:Microsoft-Hyper-V
+if "%web%"=="32" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Hypervisor
+if "%web%"=="33" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Services
+if "%web%"=="34" DISM /online /enable-feature /featurename:Printing-Foundation-Features
+if "%web%"=="35" DISM /online /enable-feature /featurename:Printing-Foundation-LPRPortMonitor
+if "%web%"=="36" DISM /online /enable-feature /featurename:Printing-Foundation-LPDPrintService
+if "%web%"=="37" DISM /online /enable-feature /featurename:Printing-Foundation-InternetPrinting-Client
+if "%web%"=="38" DISM /online /enable-feature /featurename:FaxServicesClientPackage
+if "%web%"=="39" DISM /online /enable-feature /featurename:ScanManagementConsole
+if "%web%"=="40" DISM /online /enable-feature /featurename:DirectoryServices-ADAM-Client
+if "%web%"=="41" DISM /online /enable-feature /featurename:ServicesForNFS-ClientOnly
+if "%web%"=="42" DISM /online /enable-feature /featurename:ClientForNFS-Infrastructure
+if "%web%"=="43" DISM /online /enable-feature /featurename:NFS-Administration
+if "%web%"=="44" DISM /online /enable-feature /featurename:RasCMAK
+if "%web%"=="45" DISM /online /enable-feature /featurename:TIFFIFilter
+if "%web%"=="46" DISM /online /enable-feature /featurename:SmbDirect
+if "%web%"=="47" DISM /online /enable-feature /featurename:Containers
+if "%web%"=="48" DISM /online /enable-feature /featurename:Client-DeviceLockdown
+if "%web%"=="49" DISM /online /enable-feature /featurename:Client-EmbeddedShellLauncher
+if "%web%"=="50" goto addwinfeat2
+goto addwinfeat1
+
+
+
+
+
+
+:addwinfeat2
+echo.
+echo 51) Client-EmbeddedBootExp
+echo 52) Client-EmbeddedLogon
+echo 53) Client-KeyboardFilter
+echo 54) Client-UnifiedWriteFilter
+echo 55) MultiPoint-Connector
+echo 56) MultiPoint-Connector-Services
+echo 57) MultiPoint-Tools
+echo 58) DataCenterBridging
+echo 59) Microsoft-Hyper-V-Common-Drivers-Package
+echo 60) Microsoft-Windows-NetFx-VCRedist-Package
+echo 61) Microsoft-Windows-Printing-PrintToPDFServices-Package
+echo 62) Microsoft-Windows-Printing-XPSServices-Package
+echo 63) Microsoft-Windows-Client-EmbeddedExp-Package
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="51" DISM /online /enable-feature /featurename:Client-EmbeddedBootExp
+if "%web%"=="52" DISM /online /enable-feature /featurename:Client-EmbeddedLogon
+if "%web%"=="53" DISM /online /enable-feature /featurename:Client-KeyboardFilter
+if "%web%"=="54" DISM /online /enable-feature /featurename:UnifiedWriteFilter
+if "%web%"=="55" DISM /online /enable-feature /featurename:MultiPoint-Connector
+if "%web%"=="56" DISM /online /enable-feature /featurename:MultiPoint-Connector-Services
+if "%web%"=="57" DISM /online /enable-feature /featurename:MultiPoint-Tools
+if "%web%"=="58" DISM /online /enable-feature /featurename:DataCenterBridging
+if "%web%"=="59" DISM /online /enable-feature /featurename:Microsoft-Hyper-V-Common-Drivers-Package
+if "%web%"=="60" DISM /online /enable-feature /featurename:Microsoft-Windows-NetFx-VCRedist-Package
+if "%web%"=="61" DISM /online /enable-feature /featurename:Microsoft-Windows-Printing-PrintToPDFServices-Package
+if "%web%"=="62" DISM /online /enable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
+if "%web%"=="63" DISM /online /enable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
+goto addwinfeat2
+
+
+:remwinfeat
+mode con:cols=80 lines=22
+echo.
+echo Here you will be able to remove Windows Optional Features
+echo.
+echo.
+echo.
+echo 1) Microsoft-Windows-Subsystem-Linux
+echo 2) LegacyComponents
+echo 3) DirectPlay
+echo 4) SimpleTCP
+echo 5) SNMP
+echo 6) WMISnmpProvider
+echo 7) MicrosoftWindowsPowerShellV2Root
+echo 8) MicrosoftWindowsPowerShellV2
+echo 9) Windows-Identity-Foundation
+echo 10) Internet-Explorer-Optional-amd64
+echo 11) NetFx3
+echo 12) NetFx4-AdvSrvs
+echo 13) NetFx4Extended-ASPNET45
+echo 14) MediaPlayback
+echo 15) WindowsMediaPlayer
+echo 16) Printing-PrintToPDFServices-Features
+echo 17) Printing-XPSServices-Features
+echo 18) RasRip
+echo 19) MSRDC-Infrastructure
+echo 20) SearchEngine-Client-Package
+echo 21) TelnetClient
+echo 22) TFTP
+echo 23) Xps-Foundation-Xps-Viewer
+echo 24) WorkFolders-Client
+echo 25) Next Page
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" DISM /online /disable-feature /featurename:Microsoft-Windows-Subsystem-Linux
+if "%web%"=="2" DISM /online /disable-feature /featurename:LegacyComponents && pause && goto remwinfeat
+if "%web%"=="3" DISM /online /disable-feature /featurename:DirectPlay
+if "%web%"=="4" DISM /online /disable-feature /featurename:SimpleTCP
+if "%web%"=="5" DISM /online /disable-feature /featurename:SNMP
+if "%web%"=="6" DISM /online /disable-feature /featurename:WMISnmpProvider
+if "%web%"=="7" DISM /online /disable-feature /featurename:MicrosoftWindowsPowerShellV2Root
+if "%web%"=="8" DISM /online /disable-feature /featurename:MicrosoftWindowsPowerShellV2
+if "%web%"=="9" DISM /online /disable-feature /featurename:Windows-Identity-Foundation
+if "%web%"=="10" DISM /online /disable-feature /featurename:Internet-Explorer-Optional-amd64
+if "%web%"=="11" DISM /online /disable-feature /featurename:NetFx3
+if "%web%"=="12" DISM /online /disable-feature /featurename:NetFx4-AdvSrvs
+if "%web%"=="13" DISM /online /disable-feature /featurename:NetFx4Extended-ASPNET45
+if "%web%"=="14" DISM /online /disable-feature /featurename:MediaPlayback
+if "%web%"=="15" DISM /online /disable-feature /featurename:WindowsMediaPlayer
+if "%web%"=="16" DISM /online /disable-feature /featurename:Printing-PrintToPDFServices-Features
+if "%web%"=="17" DISM /online /disable-feature /featurename:Printing-XPSServices-Features
+if "%web%"=="18" DISM /online /disable-feature /featurename:RasRip
+if "%web%"=="19" DISM /online /disable-feature /featurename:MSRDC-Infrastructure
+if "%web%"=="20" DISM /online /disable-feature /featurename:SearchEngine-Client-Package
+if "%web%"=="21" DISM /online /disable-feature /featurename:TelnetClient
+if "%web%"=="22" DISM /online /disable-feature /featurename:TFTP
+if "%web%"=="23" DISM /online /disable-feature /featurename:Xps-Foundation-Xps-Viewer
+if "%web%"=="24" DISM /online /disable-feature /featurename:WorkFolders-Client
+if "%web%"=="25" goto remwinfeat1
+goto remwinfeat
+
+
+
+
+
+
+:remwinfeat1
+echo.
+echo 26) SMB1Protocol
+echo 27) Microsoft-Hyper-V-All
+echo 28) Microsoft-Hyper-V-Tools-All
+echo 29) Microsoft-Hyper-V-Management-Clients
+echo 30) Microsoft-Hyper-V-Management-PowerShell
+echo 31) Microsoft-Hyper-V
+echo 32) Microsoft-Hyper-V-Hypervisor
+echo 33) Microsoft-Hyper-V-Services
+echo 34) Printing-Foundation-Features
+echo 35) Printing-Foundation-LPRPortMonitor
+echo 36) Printing-Foundation-LPDPrintService
+echo 37) Printing-Foundation-InternetPrinting-Client
+echo 38) FaxServicesClientPackage
+echo 39) ScanManagementConsole
+echo 40) DirectoryServices-ADAM-Client
+echo 41) ServicesForNFS-ClientOnly
+echo 42) ClientForNFS-Infrastructure
+echo 43) NFS-Administration
+echo 44) RasCMAK
+echo 45) TIFFIFilter
+echo 46) SmbDirect
+echo 47) Containers
+echo 48) Client-DeviceLockdown
+echo 49) Client-EmbeddedShellLauncher
+echo 50) Next Page
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="26" DISM /online /disable-feature /featurename:SMB1Protocol
+if "%web%"=="27" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-All
+if "%web%"=="28" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Tools-All
+if "%web%"=="29" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Management-Clients
+if "%web%"=="30" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Management-PowerShell
+if "%web%"=="31" DISM /online /disable-feature /featurename:Microsoft-Hyper-V
+if "%web%"=="32" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Hypervisor
+if "%web%"=="33" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Services
+if "%web%"=="34" DISM /online /disable-feature /featurename:Printing-Foundation-Features
+if "%web%"=="35" DISM /online /disable-feature /featurename:Printing-Foundation-LPRPortMonitor
+if "%web%"=="36" DISM /online /disable-feature /featurename:Printing-Foundation-LPDPrintService
+if "%web%"=="37" DISM /online /disable-feature /featurename:Printing-Foundation-InternetPrinting-Client
+if "%web%"=="38" DISM /online /disable-feature /featurename:FaxServicesClientPackage
+if "%web%"=="39" DISM /online /disable-feature /featurename:ScanManagementConsole
+if "%web%"=="40" DISM /online /disable-feature /featurename:DirectoryServices-ADAM-Client
+if "%web%"=="41" DISM /online /disable-feature /featurename:ServicesForNFS-ClientOnly
+if "%web%"=="42" DISM /online /disable-feature /featurename:ClientForNFS-Infrastructure
+if "%web%"=="43" DISM /online /disable-feature /featurename:NFS-Administration
+if "%web%"=="44" DISM /online /disable-feature /featurename:RasCMAK
+if "%web%"=="45" DISM /online /disable-feature /featurename:TIFFIFilter
+if "%web%"=="46" DISM /online /disable-feature /featurename:SmbDirect
+if "%web%"=="47" DISM /online /disable-feature /featurename:Containers
+if "%web%"=="48" DISM /online /disable-feature /featurename:Client-DeviceLockdown
+if "%web%"=="49" DISM /online /disable-feature /featurename:Client-EmbeddedShellLauncher
+if "%web%"=="50" goto remwinfeat2
+goto remwinfeat1
+
+
+
+
+
+
+:remwinfeat2
+echo.
+echo 51) Client-EmbeddedBootExp
+echo 52) Client-EmbeddedLogon
+echo 53) Client-KeyboardFilter
+echo 54) Client-UnifiedWriteFilter
+echo 55) MultiPoint-Connector
+echo 56) MultiPoint-Connector-Services
+echo 57) MultiPoint-Tools
+echo 58) DataCenterBridging
+echo 59) Microsoft-Hyper-V-Common-Drivers-Package
+echo 60) Microsoft-Windows-NetFx-VCRedist-Package
+echo 61) Microsoft-Windows-Printing-PrintToPDFServices-Package
+echo 62) Microsoft-Windows-Printing-XPSServices-Package
+echo 63) Microsoft-Windows-Client-EmbeddedExp-Package
+echo.
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="51" DISM /online /disable-feature /featurename:Client-EmbeddedBootExp
+if "%web%"=="52" DISM /online /disable-feature /featurename:Client-EmbeddedLogon
+if "%web%"=="53" DISM /online /disable-feature /featurename:Client-KeyboardFilter
+if "%web%"=="54" DISM /online /disable-feature /featurename:UnifiedWriteFilter
+if "%web%"=="55" DISM /online /disable-feature /featurename:MultiPoint-Connector
+if "%web%"=="56" DISM /online /disable-feature /featurename:MultiPoint-Connector-Services
+if "%web%"=="57" DISM /online /disable-feature /featurename:MultiPoint-Tools
+if "%web%"=="58" DISM /online /disable-feature /featurename:DataCenterBridging
+if "%web%"=="59" DISM /online /disable-feature /featurename:Microsoft-Hyper-V-Common-Drivers-Package
+if "%web%"=="60" DISM /online /disable-feature /featurename:Microsoft-Windows-NetFx-VCRedist-Package
+if "%web%"=="61" DISM /online /disable-feature /featurename:Microsoft-Windows-Printing-PrintToPDFServices-Package
+if "%web%"=="62" DISM /online /disable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
+if "%web%"=="63" DISM /online /disable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
+goto remwinfeat2
