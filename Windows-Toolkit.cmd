@@ -973,6 +973,7 @@ echo 22) TFTP
 echo 23) Xps-Foundation-Xps-Viewer
 echo 24) WorkFolders-Client
 echo 25) Next Page
+echo 0) Back
 echo.
 echo.
 echo.
@@ -1002,6 +1003,7 @@ if "%web%"=="22" DISM /online /disable-feature /featurename:TFTP
 if "%web%"=="23" DISM /online /disable-feature /featurename:Xps-Foundation-Xps-Viewer
 if "%web%"=="24" DISM /online /disable-feature /featurename:WorkFolders-Client
 if "%web%"=="25" goto remwinfeat1
+if "%web%"=="0" goto winfeaturesmenu
 goto remwinfeat
 
 
