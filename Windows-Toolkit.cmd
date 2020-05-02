@@ -185,8 +185,8 @@ echo.
 echo 3) Stop Cortana Searching Online
 echo 4) Start Cortana Searching Online
 echo.
-echo 3) Back
-echo 4) Exit
+echo 5) Back
+echo 6) Exit
 echo.
 echo.
 set /p web=Type option:
