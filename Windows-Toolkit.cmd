@@ -1208,4 +1208,5 @@ pause
 goto metrouimenu
 
 :yesbloat
-echo This is coming soon
+echo This is coming soon.
+pause goto metrouimenu
