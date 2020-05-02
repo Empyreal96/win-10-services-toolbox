@@ -62,7 +62,7 @@ pause
 
 
 @echo off
-title Windows 10 Toolbox by Empyreal96
+title Windows 10 Toolbox by Empyreal96@Github
 :home
 mode con:cols=80 lines=25
 cls
@@ -70,14 +70,14 @@ echo.
 echo This tool will allow you to disable various components of Windows or enable
 echo various parts of Windows, each section contains different tweaks for different
 echo situations i.e Windows Update, Search, Features, Apps etc..
-echo any issues contact @Empyreal96 at xda-developers.com
+echo any issues contact @Empyreal96 at Github
 echo.
 echo.
 echo 1) Windows Update
 echo 2) Windows Search
 echo 3) Cortana
 echo 4) Windows Spotlight (Lockscreen Web Images, Lockscreen "Facts")
-echo 5) Disable "Safe" Services
+echo 5) Windows Services
 echo 6) Telemetry and User Data Sharing
 echo 7) OneDrive
 echo 8) Powershell Tweaks
@@ -90,7 +90,7 @@ if "%web%"=="1" goto update
 if "%web%"=="2" goto search
 if "%web%"=="3" goto cortana
 if "%web%"=="4" goto spotlight
-if "%web%"=="5" goto routine1
+if "%web%"=="5" goto winserv
 if "%web%"=="6" goto telemetry
 if "%web%"=="7" goto onedrive
 if "%web%"=="8" goto powershellmenu
@@ -281,7 +281,7 @@ goto spotlight
 
 :nowall
 mode con:cols=80 lines=22
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoChangingLockScreen /t REG_WORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoChangingLockScreen /t REG_DWORD /d 1 /f
 pause
 goto spotlight
 :yeswall
@@ -340,7 +340,7 @@ sc.exe config WbioSrvc start=disabled
 sc.exe stop WMPNetworkSvc
 sc.exe config WMPNetworkSvc start=disabled
 sc.exe stop EntAppSvc
-sc.exe config EntAppSvc start=disabled
+reg add "HKLM\System\CurrentControlSet\Services\EntAppSvc" /v Start /t REG_DWORD /d 4 /f
 sc.exe stop HvHost
 sc.exe config HvHost start=disabled
 sc.exe stop vmickvpexchange
@@ -371,8 +371,10 @@ sc.exe stop ALG
 sc.exe config ALG start=disabled 
 sc.exe stop PeerDistSvc
 sc.exe config PeerDistSvc start=disabled
+rem ***Windows 10 1703 or Higher***
 sc.exe stop WpcMonSvc
 sc.exe config WpcMonSvc start=disabled
+rem 
 sc.exe stop RpcLocator
 sc.exe config RpcLocator start=disabled
 sc.exe stop RetailDemo
@@ -389,8 +391,6 @@ sc.exe stop wisvc
 sc.exe config wisvc start=disabled
 sc.exe stop WinRM
 sc.exe config WinRM start=disabled
-sc.exe stop wbengine
-sc.exe config wbengine start=disabled
 sc.exe stop fhsvc
 sc.exe config fhsvc start=disabled
 sc.exe stop NaturalAuthentication
@@ -400,7 +400,7 @@ sc.exe config SessionEnv start=disabled
 sc.exe stop TermService
 sc.exe config TermService start=disabled
 sc.exe stop SharedRealitySvc
-sc.exe config ShareRealitySvc start=disabled
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v EnableCdp /t REG_DWORD /d 1 /f
 sc.exe stop VSS
 sc.exe config VSS start=disabled
 sc.exe stop Wecsvc
@@ -411,7 +411,7 @@ sc.exe stop XtaCache
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\XtaCache" /v start /t REG_DWORD /d 4 /f
 reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
 pause
-goto home
+goto winserv
 
 
 :telemetry
@@ -1210,3 +1210,149 @@ goto metrouimenu
 :yesbloat
 echo This is coming soon.
 pause goto metrouimenu
+
+
+:winserv
+mode con:cols=80 lines=22
+echo.
+echo Here you can disable or enable *safe* Services
+echo By safe I mean no visable impact on my systems when running this
+echo I will be improving this section over time.
+echo.
+echo.
+echo 1) View Services Being Changed
+echo 2) Disable Services
+echo 3) Re-Enable Services
+echo 4) Back
+echo 5) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" goto viewserv
+if "%web%"=="2" goto routine1
+if "%web%"=="3" goto yesservsafe
+if "%web%"=="4" goto home
+if "%web%"=="5" goto exit
+if "%web%"=="6" goto routine1log
+goto winserv
+
+:routine1log 
+call :routine1 >.\svclist.txt
+notepad .\svclist.txt
+pause
+del .\svclist.txt
+goto winserv
+
+:yesservsafe
+mode con:cols=80 lines=22
+sc.exe config WerSvc start=auto
+sc.exe config DiagTrack start=auto
+sc.exe config DPS start=auto
+sc.exe config MapsBroker start=auto
+sc.exe config PcaSvc start=auto
+sc.exe config Spooler start=auto
+sc.exe config RemoteRegistry start=auto
+sc.exe config lmhosts start=auto
+sc.exe config WerSvc start=auto
+sc.exe config stisvc start=auto
+sc.exe config lfsvc start=auto
+sc.exe config WbioSrvc start=auto
+sc.exe config WMPNetworkSvc start=auto
+reg add "HKLM\System\CurrentControlSet\Services\EntAppSvc" /v Start /t REG_DWORD /d 2 /f
+sc.exe config HvHost start=auto
+sc.exe config vmickvpexchange start=auto
+sc.exe config vmicguestinterface start=auto
+sc.exe config vmicshutdown start=auto
+sc.exe config vmicheartbeat start=auto
+sc.exe config vmicvmsession start=auto
+sc.exe config vmicrdv start=auto
+sc.exe config vmictimesync start=auto
+sc.exe config vmicvss start=auto
+sc.exe config AppVClient start=auto
+sc.exe config RemoteAccess start=auto
+sc.exe config SCardSvr start=auto
+sc.exe config UevAgentService start=auto
+sc.exe config ALG start=auto 
+sc.exe config PeerDistSvc start=auto
+sc.exe config WpcMonSvc start=auto
+sc.exe config RpcLocator start=auto
+sc.exe config RetailDemo start=auto
+sc.exe config ScDeviceEnum start=auto
+sc.exe config SCPolicySvc start=auto
+sc.exe config FrameServer start=auto
+sc.exe config SNMPTRAP start=auto
+sc.exe config wisvc start=auto
+sc.exe config WinRM start=auto
+sc.exe config fhsvc start=auto
+sc.exe config NaturalAuthentication start=auto
+sc.exe config SessionEnv start=auto
+sc.exe config TermService start=auto
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\System" /v EnableCdp /t REG_DWORD /d 0 /f
+sc.exe config VSS start=auto
+sc.exe config Wecsvc start=auto
+sc.exe config spectrum start=auto
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\XtaCache" /v start /t REG_DWORD /d 2 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
+pause
+goto winserv
+
+:viewserv
+echo.
+echo Displaying list in Notepad..
+call :viewservout >.\svclist.txt
+notepad .\svclist.txt
+pause
+del .\svclist.txt
+goto winserv
+
+:viewservout
+echo.
+echo.
+echo Service Name - Service Full Name 
+echo.
+echo.
+echo WerSvc - Windows Error Reporting
+echo DiagTrack - Connected User Experiences And Telemetry
+echo DPS - Diagnostic Policy Service
+echo MapsBroker - Downloaded Maps Manager
+echo PcaSvc - Program Compatability Assisstant Service
+echo Spooler - Print Spooler
+echo RemoteRegistry - Remote Registry
+echo lmhosts - TCP/IP (NetBIOS Helper)
+echo stisvc - Still Imaging Service
+echo lfsvc - Geolocation Service
+echo WbioSrvc - Windows Biometric Service
+echo WMPNetworkSvc - Windows Media Player Network Sharing Service
+echo EntAppSvc - Enterprise App Management Service
+echo HvHost - HV Host Service
+echo vmickvpexchange - Hyper-V Data Exchange Service
+echo vmicguestinterface - Hyper-V Guest Service Interface
+echo vmicshutdown - Hyper-V Guest Shutdown Service
+echo vmicheartbeat - Hyper-V Heartbeat Service
+echo vmicvmsession - Hyper-V PowerShell Direct Service
+echo vmicrdv - Hyper-V Remote Desktop Virtualization Service
+echo vmictimesync - Hyper-V Time Synchronization Service
+echo vmicvss - Hyper-V Volume Shadow Copy Requestor
+echo AppVClient - Microsoft App-V Client
+echo RemoteAccess - Routing and Remote Access
+echo SCardSvr - Smart Card
+echo UevAgentService - User Experience Virtualization Service
+echo ALG  - Application Layer Gateway Service
+echo PeerDistSvc - BranchCache
+echo WpcMonSvc - Parental Controls Service
+echo RpcLocator - Remote Procedure Call (RPC) Locator
+echo RetailDemo - Retail Demo
+echo ScDeviceEnum - Smart Card Device Enumeration Service
+echo SCPolicySvc - Smart Card Removal Policy
+echo FrameServer - Windows Camera Frame Server
+echo SNMPTRAP - SNMP Trap
+echo wisvc - Windows Insider Service
+echo WinRM - Windows Remote Management Service
+echo fhsvc - File History Service
+echo NaturalAuthentication - Natural Authentication
+echo SessionEnv - Remote Desktop Configuration
+echo TermService - Remote Desktop Services
+echo ShareRealitySvc - Spatial Data Service
+echo VSS - Volume Shadow Copy
+echo Wecsvc - Windows Event Collector
+echo spectrum - Windows Perception Service
