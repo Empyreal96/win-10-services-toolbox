@@ -103,7 +103,7 @@ if "%web%"=="6" goto telemetry
 if "%web%"=="7" goto onedrive
 if "%web%"=="8" goto powershellmenu
 if "%web%"=="9" goto settweakmenu
-if "%web%"=="10" goto exit
+if "%web%"=="10" exit
 goto home
 
 :update
@@ -229,7 +229,7 @@ if "%web%"=="2" goto searchstop
 if "%web%"=="3" call :ImmersiveSearch
 if "%web%"=="4" call :NormalSearch
 if "%web%"=="5" goto home
-if "%web%"=="6" goto exit
+if "%web%"=="6" exit
 goto search
 
 :searchstart
@@ -546,7 +546,7 @@ if "%web%"=="3" goto nocon
 if "%web%"=="4" goto yescon
 if "%web%"=="5" goto teltask
 if "%web%"=="6" goto home
-if "%web%"=="7" goto exit
+if "%web%"=="7" exit
 goto telemetry
 :yestel
 mode con:cols=80 lines=22
@@ -661,7 +661,7 @@ if "%web%"=="1" goto unone
 if "%web%"=="2" goto noexplore
 if "%web%"=="3" goto yesexplore
 if "%web%"=="4" goto home
-if "%web%"=="5" goto exit
+if "%web%"=="5" exit
 goto onedrive
 
 :unone
@@ -763,7 +763,7 @@ if "%web%"=="2" goto winfeaturesmenu
 if "%web%"=="3" goto viewinfomenu
 if "%web%"=="4" goto syshealthmenu
 if "%web%"=="5" goto home
-if "%web%"=="6" goto exit
+if "%web%"=="6" exit
 goto powershellmenu
 
 :metrouimenu
@@ -801,7 +801,7 @@ set /p web=Type option:
 if "%web%"=="1" goto addwinfeat
 if "%web%"=="2" goto remwinfeat
 if "%web%"=="3" goto powershellmenu
-if "%web%"=="4" goto exit
+if "%web%"=="4" exit
 goto winfeaturesmenu
 :viewinfomenu
 mode con:cols=80 lines=22
@@ -819,7 +819,7 @@ set /p web=Type option:
 if "%web%"=="1" goto viewmetro
 if "%web%"=="2" goto viewwinfeat
 if "%web%"=="3" goto powershellmenu
-if "%web%"=="4" goto exit
+if "%web%"=="4" exit
 goto viewinfomenu
 
 :syshealthmenu
@@ -840,7 +840,7 @@ if "%web%"=="1" goto dismscan
 if "%web%"=="2" goto dismfix
 if "%web%"=="3" goto sfccheck
 if "%web%"=="4" goto powershellmenu
-if "%web%"=="5" goto exit
+if "%web%"=="5" exit
 goto syshealthmenu
 
 :addwinfeat
@@ -1004,7 +1004,7 @@ if "%web%"=="61" DISM /online /enable-feature /featurename:Microsoft-Windows-Pri
 if "%web%"=="62" DISM /online /enable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
 if "%web%"=="63" DISM /online /enable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
 if "%web%"=="64" goto winfeaturesmenu
-if "%web%"=="65" goto exit
+if "%web%"=="65" exit
 goto addwinfeat2
 
 
@@ -1176,7 +1176,7 @@ if "%web%"=="61" DISM /online /disable-feature /featurename:Microsoft-Windows-Pr
 if "%web%"=="62" DISM /online /disable-feature /featurename:Microsoft-Windows-Printing-XPSServices-Package
 if "%web%"=="63" DISM /online /disable-feature /featurename:Microsoft-Windows-Client-EmbeddedExp-Package
 if "%web%"=="64" goto winfeaturesmenu
-if "%web%"=="65" goto exit
+if "%web%"=="65" exit
 goto remwinfeat2
 
 :viewmetro
@@ -1298,7 +1298,7 @@ if "%web%"=="1" goto viewserv
 if "%web%"=="2" goto routine1
 if "%web%"=="3" goto yesservsafe
 if "%web%"=="4" goto home
-if "%web%"=="5" goto exit
+if "%web%"=="5" exit
 if "%web%"=="6" goto routine1log
 goto winserv
 
@@ -1446,7 +1446,7 @@ if "%web%"=="5" goto winsyssettings
 if "%web%"=="6" goto misc
 if "%web%"=="7" goto AdvTweak
 if "%web%"=="8" goto home
-if "%web%"=="9" goto exit
+if "%web%"=="9" exit
 goto settweakmenu
 
 :winsyssettings
@@ -1459,8 +1459,8 @@ echo 1) Manage Page File/Virtual Memory
 echo 2) *PLACEHOLDER*
 echo 3) *PLACEHOLDER*
 echo 4) *PLACEHOLDER*
-echo 5) *PLACEHOLDER*
-echo 6) *PLACEHOLDER*
+echo 5) Back
+echo 6) Exit
 echo.
 echo.
 set /p web=Type option:
@@ -1468,8 +1468,8 @@ if "%web%"=="1" echo Coming soon
 if "%web%"=="2" echo Coming soon
 if "%web%"=="3" echo Coming soon
 if "%web%"=="4" echo Coming soon
-if "%web%"=="5" echo Coming soon
-if "%web%"=="6" goto home
+if "%web%"=="5" goto home
+if "%web%"=="6" exit
 goto winsyssettings
 
 :AdvTweak
@@ -1691,11 +1691,11 @@ if "%web%"=="9" reg add "HKCU\\Control Panel\Desktop" /v PaintDesktopVersion /t 
 if "%web%"=="10" reg add "HKCU\\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 1 /f && pause && goto appearance
 if "%web%"=="11" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 15000000 /f && pause && goto appearance
 if "%web%"=="12" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 00000000 /f && pause && goto appearance
-if "%web%"=="13"  call :fixscale
-if "%web%"=="14"  call :nofixscale
-if "%web%"=="15"  call :defaultdpiset
+if "%web%"=="13" call :fixscale
+if "%web%"=="14" call :nofixscale
+if "%web%"=="15" call :defaultdpiset
 if "%web%"=="16" goto settweakmenu
-if "%web%"=="17" goto exit
+if "%web%"=="17" exit
 goto appearance
 
 :defaultdpiset
@@ -2348,7 +2348,7 @@ if "%web%"=="6" goto yesdefsamp
 if "%web%"=="7" goto nostoresmart
 if "%web%"=="8" goto yesstoresmart
 if "%web%"=="9" goto settweakmenu
-if "%web%"=="10" goto exit
+if "%web%"=="10" exit
 goto misc
 
 
@@ -2391,7 +2391,7 @@ if "%web%"=="11" call :ResetFolderView
 if "%web%"=="12" call :RestoreDefaultShell
 if "%web%"=="13" mkdir %userprofile%\Desktop\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C} && explorer.exe %userprofile%\Desktop\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}
 if "%web%"=="14" goto settweakmenu
-if "%web%"=="15" goto exit
+if "%web%"=="15" exit
 goto explorermenu
 
 :AddDetailPane
