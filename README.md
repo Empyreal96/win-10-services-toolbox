@@ -95,7 +95,7 @@ More 'Advanced Options' available
 
 **AND MUCH MORE!!**
 
-![ToolScreen](https://github.com/Empyreal96/win-10-services-toolbox/blob/master/Update%20Switch%20Screens/screen.gif)
+![ToolScreen](https://github.com/Empyreal96/win-10-services-toolbox/blob/master/Update%20Switch%20Screens/screen2.gif)
 
 **Setup complete.cmd** - file used in my custom Win ARM image
 
