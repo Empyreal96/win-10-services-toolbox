@@ -1,4 +1,5 @@
  @echo off
+ color 7D
  mode con:cols=80 lines=25
  CLS
  ECHO.
@@ -772,7 +773,7 @@ echo Here you can modify built-in bloat Windows Apps.
 echo.
 echo.
 echo 1) Remove all 'Bloat' Apps
-echo 2) Re-Install all 'Bloat' Apps
+echo 2) Re-Install all 'Bloat' Apps (Coming Soon)
 echo 3) Back
 echo 4) Exit
 echo.
