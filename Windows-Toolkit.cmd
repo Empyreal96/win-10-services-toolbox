@@ -1927,7 +1927,8 @@ goto PowerOptionsMenu
 :ChangePowerPlan
 cls
 echo Please make sure you have viewed what Plans are available to your PC
-echo Not all of these will be available.
+echo Not all of these will be available. if you recieve this error (It's quick so pay attention):
+echo "Invalid Parameters -- try "/?" for help" then the Plan doesn't exist on your PC
 echo.
 echo (MaximumPerformance)
 echo (TimersOff)
@@ -1940,14 +1941,14 @@ echo (Powersaver)
 echo B) Back
 echo.
 set /P pwrcfg=Type plan WITHOUT brackets or B for Back:
-if "%pwrcfg%"=="MaximumPerformance" powercfg -setactive 01360e7e-525f-4625-ab94-f283dcfbd515 && echo Done.
-if "%pwrcfg%"=="TimersOff" powercfg -setactive 25703703-e852-4c6a-b8d5-b36dd2e3f757 && echo Done.
-if "%pwrcfg%"=="Balanced" powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e && echo Done.
-if "%pwrcfg%"=="MaximumBatteryLife" powercfg -setactive 4ac93938-c0ab-4b33-9150-b71bf11e59d3 && echo Done.
-if "%pwrcfg%"=="VideoPlayback" powercfg -setactive 6aea82bd-cf7f-424c-aee8-7dba1ee06330 && echo Done.
-if "%pwrcfg%"=="HighPerformance" powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c && echo Done.
-if "%pwrcfg%"=="PowerSourceOptimized" powercfg -setactive 8ce8c17f-8bb0-4d23-98d1-ae3311cbee5a && echo Done.
-if "%pwrcfg%"=="Powersaver" powercfg -setactivea1841308-3541-4fab-bc81-f71556f20b4a && echo Done.
+if "%pwrcfg%"=="MaximumPerformance" powercfg -setactive 01360e7e-525f-4625-ab94-f283dcfbd515 && pause
+if "%pwrcfg%"=="TimersOff" powercfg -setactive 25703703-e852-4c6a-b8d5-b36dd2e3f757 && pause
+if "%pwrcfg%"=="Balanced" powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e && pause
+if "%pwrcfg%"=="MaximumBatteryLife" powercfg -setactive 4ac93938-c0ab-4b33-9150-b71bf11e59d3 && pause
+if "%pwrcfg%"=="VideoPlayback" powercfg -setactive 6aea82bd-cf7f-424c-aee8-7dba1ee06330 && pause
+if "%pwrcfg%"=="HighPerformance" powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c && pause
+if "%pwrcfg%"=="PowerSourceOptimized" powercfg -setactive 8ce8c17f-8bb0-4d23-98d1-ae3311cbee5a && pause
+if "%pwrcfg%"=="Powersaver" powercfg -setactivea1841308-3541-4fab-bc81-f71556f20b4a && pause
 if "%pwrcfg%"=="B" goto PowerOptionsMenu
 goto ChangePowerPlan
 

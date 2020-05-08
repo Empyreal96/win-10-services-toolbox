@@ -7,32 +7,26 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+- **Tell me exactly what the issue is**.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+  **Example:** I tried to change my power plan but it didn't work, stated that the plan did not exist
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+  
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+- **Give me exact details on what you did to get to the issue.**
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+  **Example:** I loaded up the script, chose Settings and Tweaks- Windows System Settings- Power Options
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+  chose "Change Power Plan", Typed MaximumPerformance but it did not set the Plan.
 
-**Additional context**
-Add any other context about the problem here.
+  
+
+- **Screenshots (If possible)**
+
+  
+
+- **What Build, Edition and Architecture are you using: ****
+
+  **Example:** Windows 10 Home 1909 18363.327 64 Bit **
+
+
