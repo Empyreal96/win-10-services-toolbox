@@ -1,26 +1,36 @@
- @echo off
- color 7D
- mode con:cols=80 lines=25
- CLS
- ECHO.
- ECHO.
-echo I made this script using various bits of info I found using
-echo the Microsoft site and a few forum boards. I have tested
-echo this and use it frequently, and will continue to improve this script.
-echo Tested on Windows 10: Home and Pro on x64 and ARM64.
-echo Any issues, feedback or suggestions contact @Empyreal96 on Github
-echo Powershell Windows Feature options scripted by @BeckarAC on Github
-echo Also Thanks to MajorGeeks for their Registry Tweak Repo.
+@echo off
+color 7D
+mode con:cols=102 lines=32
+CLS
+ECHO ====================================================================================
 echo.
-echo This script will let you control different parts of Windows, for example:
-echo Windows Services, Checking System Files, Modifying Features and Apps,
-echo Windows Settings, Security and Privacy, Context Menu and More!
-pause
-cls
-echo USING THIS TOOL YOU UNDERSTAND THAT MODIFYING WINDOWS,
-echo IT'S REGISTRY, FILES AND OTHER COMPONENTS MAY CAUSE INSTABILITY
-echo IF YOU KNOW WHAT YOU ARE DOING PLEASE CONTINUE.
-echo This message will appear once more after gaining Admin permissions.
+echo **This message will appear once more after acquiring Admin permissions.**
+echo =====================================================================================
+echo.
+echo This is my first script, started out as a simple tool I wanted to help me change parts
+echo of Windows 10 on my Lumia 950 XL.. I got the itch for it now I have gone beyond that
+echo Now it is becoming a fully-fledged Toolbox.. It is in constant progress.
+echo =====================================================================================
+echo.
+echo Information/tweaks/commands used in this script:
+echo =====================================================================================
+echo.
+echo I already had basic knowledge of some things. (Shown in first few commits of the project)
+echo I used the internet trawling Microsoft's Documentation, Superuser forums, various Windows 10 Forums.
+echo MajorGeeks website provided alot of the Registry tweaks used.
+echo Tron script on Github: https://github.com/bmrf/tron for Removing Bad Updates and some Services
+echo BeckarAC at Github for help structuring the code in the beginning Powershell section
+echo =====================================================================================
+echo.
+echo Tested on Windows 10 Pro x64 and ARM64, Windows 10 Home ARM64 (Please tell me what editions work)
+echo =====================================================================================
+echo.
+echo Any feedback or suggestions contact me on GitHub:
+echo https://github.com/empyreal96 
+echo ========================================================================
+echo Anything that doesn't work, post a thread here:
+echo https://github.com/Empyreal96/win-10-services-toolbox/issues
+echo ========================================================================
 pause
 
 
@@ -70,6 +80,20 @@ pause
 
 
 @echo off
+mode con:cols=85 lines=25
+cls
+echo ===============================================================================
+echo THIS TOOL WILL MODIFY VARIOUS PARTS OF WINDOWS. BY USING THIS TOOL
+echo YOU KNOWINGLY ACCEPT THE RISKS IN MODIFYING/CHANGING/DELETING ANYTHING
+echo THAT REQUIRES ADMIN PERMISSION AND/OR USED BY CERTAIN SYSTEM FILES/SERVICES.
+echo I WILL NOT BE HELD RESPONSIBLE FOR ANY DAMAGE CAUSED, I TEST THIS THOROUGHLY WITH
+echo MY COMPUTERS, BUT NO PC IS THE SAME.
+echo.
+echo IF YOU DON'T KNOW WHAT YOU WANT TO DO WITH THIS TOOL CLOSE THIS WINDOW NOW.
+echo ===============================================================================
+pause
+goto home
+
 title Windows 10 Toolbox by Empyreal96@Github
 :home
 mode con:cols=80 lines=25
@@ -120,8 +144,9 @@ echo 3) Disable Automatic Driver Downloads
 echo 4) Enable Automatic Driver Downloads
 echo 5) Disable Automatic Maintenance
 echo 6) Enable Automatic Maintenance
-echo 7) Back
-echo 8) Exit
+echo 7) Uninstall 'Bad' Updates
+echo 8) Back
+echo 9) Exit
 echo.
 echo.
 set /p web=Type option:
@@ -129,10 +154,79 @@ if "%web%"=="1" goto startwu
 if "%web%"=="2" goto stopwu
 if "%web%"=="3" call :AutoWinDriverOff
 if "%web%"=="4" call :AutoWinDriverOn
-if "%web%"=="5" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v MaintenanceDisabled /t REG_DWORD /d 1 /f && pause
-if "%web%"=="6" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v MaintenanceDisabled /t REG_DWORD /d 0 /f && pause
-if "%web%"=="7" goto home
-if "%web%"=="8" exit
+if "%web%"=="5" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v MaintenanceDisabled /t REG_DWORD /d 1 /f && pause && goto update
+if "%web%"=="6" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance" /v MaintenanceDisabled /t REG_DWORD /d 0 /f && pause && goto update
+if "%web%"=="7" call :BadUpdates
+if "%web%"=="8" goto home
+if "%web%"=="9" exit
+goto update
+
+:BadUpdates
+cls
+echo.
+echo This will attempt to Uninstall any bad updates (eg. KB2902907)
+echo Not every one of these Updates will be installed so success varies.
+echo.
+echo Credit for finding these and the commands go to the devs behind
+echo the Tron script on Github https://github.com/bmrf/tron
+echo.
+echo ONLY DO THIS IF YOU KNOW WHAT YOU ARE DOING..
+echo.
+echo.
+set /P removebadup="Do you want to continue? (type y or n)"
+if "%removebadup%"=="y" goto BadUpdatesRem
+if "%removebadup%"=="n" goto update
+goto BadUpdates
+:BadUpdatesRem
+::KB 2902907 (https://support.microsoft.com/en-us/kb/2902907)
+wusa /uninstall /kb:2902907 /norestart /quiet
+::KB 2922324 (https://support.microsoft.com/en-us/kb/2922324)
+wusa /uninstall /kb:2922324 /norestart /quiet
+::KB 2952664 (https://support.microsoft.com/en-us/kb/2952664)
+wusa /uninstall /kb:2952664 /norestart /quiet
+::KB 2976978 (https://support.microsoft.com/en-us/kb/2976978)
+wusa /uninstall /kb:2976978 /norestart /quiet
+::KB 2977759 (https://support.microsoft.com/en-us/kb/2977759)
+wusa /uninstall /kb:2977759 /norestart /quiet
+::KB 2990214 (https://support.microsoft.com/en-us/kb/2990214)
+wusa /uninstall /kb:2990214 /norestart /quiet
+::KB 3012973 (https://support.microsoft.com/en-us/kb/3012973)
+wusa /uninstall /kb:3012973 /norestart /quiet
+::KB 3014460 (https://support.microsoft.com/en-us/kb/3014460)
+wusa /uninstall /kb:3014460 /norestart /quiet
+::KB 3015249 (https://support.microsoft.com/en-us/kb/3015249)
+wusa /uninstall /kb:3015249 /norestart /quiet
+::KB 3021917 (https://support.microsoft.com/en-us/kb/3021917)
+wusa /uninstall /kb:3021917 /norestart /quiet
+::KB 3022345 (https://support.microsoft.com/en-us/kb/3022345)
+wusa /uninstall /kb:3022345 /norestart /quiet
+::KB 3035583 (https://support.microsoft.com/en-us/kb/3035583)
+wusa /uninstall /kb:3035583 /norestart /quiet
+::KB 3044374 (https://support.microsoft.com/en-us/kb/3044374)
+wusa /uninstall /kb:3044374 /norestart /quiet
+::KB 3050265 (https://support.microsoft.com/en-us/kb/3050265)
+wusa /uninstall /kb:3050265 /norestart /quiet
+::KB 3050267 (https://support.microsoft.com/en-us/kb/3050267)
+wusa /uninstall /kb:3050267 /norestart /quiet
+::KB 3065987 (https://support.microsoft.com/en-us/kb/3065987)
+wusa /uninstall /kb:3065987 /norestart /quiet
+::KB 3068708 (https://support.microsoft.com/en-us/kb/3068708)
+wusa /uninstall /kb:3068708 /norestart /quiet
+::KB 3075249 (https://support.microsoft.com/en-us/kb/3075249)
+wusa /uninstall /kb:3075249 /norestart /quiet
+::KB 3075851 (https://support.microsoft.com/en-us/kb/3075851)
+wusa /uninstall /kb:3075851 /norestart /quiet
+::KB 3075853 (https://support.microsoft.com/en-us/kb/3075853)
+wusa /uninstall /kb:3075853 /norestart /quiet
+::KB 3080149 (https://support.microsoft.com/en-us/kb/3080149)
+wusa /uninstall /kb:3080149 /norestart /quiet
+::Additional KB entries removed by Microsoft; originally associated with telemetry
+wusa /uninstall /kb:2976987 /norestart /quiet
+wusa /uninstall /kb:3068707 /norestart /quiet
+cls
+echo If any of the Updates installed were installed they have been removed, Restart to see effect.
+echo If you got this message instantly then none of these updates are installed
+pause
 goto update
 
 :startwu
@@ -773,7 +867,7 @@ echo Here you can modify built-in bloat Windows Apps.
 echo.
 echo.
 echo 1) Remove all 'Bloat' Apps
-echo 2) Re-Install all 'Bloat' Apps (Coming Soon)
+echo 2) Re-Install all 'Bloat' Apps (Not Working)
 echo 3) Back
 echo 4) Exit
 echo.
@@ -844,6 +938,7 @@ if "%web%"=="5" exit
 goto syshealthmenu
 
 :addwinfeat
+cls
 mode con:cols=80 lines=40
 echo.
 echo Here you will be able to add Windows Optional Features
@@ -1191,6 +1286,7 @@ goto viewinfomenu
 
 
 :viewwinfeat
+cls
 mode con:cols=80 lines=22
 echo Scanning Windows Optional Features... Result will open in Notepad
 echo Auto generated txt is deleted after closing Notepad so Save As new file.
@@ -1201,6 +1297,7 @@ del .\winfeat.txt
 goto viewinfomenu
 
 :dismscan
+cls
 echo Scanning System Files with DISM...
 echo Using /CheckHealth and /ScanHealth commands
 echo This may take a while...
@@ -1214,6 +1311,7 @@ goto syshealthmenu
 
 
 :dismfix
+cls
 echo This will attempt to fix any issues with your install..
 echo This will take a while...
 echo.
@@ -1237,6 +1335,7 @@ echo This will attempt to remove built in 'Bloatware'
 echo apps like News, Get Help, 3DViewer, OneNote etc.
 echo *Success may vary due to different Windows versions, 
 echo Appx Package name changes and other factors*
+echo THIS WILL TAKE TIME.
 echo.
 pause
 powershell.exe "Get-AppxPackage *Microsoft.BingNews* | Remove-AppxPackage"
@@ -1273,7 +1372,13 @@ pause
 goto metrouimenu
 
 :yesbloat
-echo Coming Soon (Please suggest method for this...)
+echo This will attempt to install all the Default Apps installed with Windows.
+echo This will vary in success with Windows Builds (Ideally 18xx or up)
+echo.
+echo THIS DOESN'T WORK FOR ME. I left it in though as a placeholder if you know how 
+echo to make this work please let me know
+pause
+start powershell.exe -command "& {Get-AppxPackage -allusers | foreach {Add-AppxPackage -register "$($_.InstallLocation)\appxmanifest.xml" -DisableDevelopmentMode}}
 pause
 goto metrouimenu
 
@@ -1431,10 +1536,11 @@ echo 2) Context Menu Items
 echo 3) Windows Explorer
 echo 4) Windows Security and Defender
 echo 5) Windows System Settings
-echo 6) Misc Tweaks
-echo 7) Advanced Misc Tweaks
-echo 8) Back
-echo 9) Exit
+echo 6) Windows Programs and Features
+echo 7) Misc Tweaks
+echo 8) Advanced Misc Tweaks
+echo 9) Back
+echo 10) Exit
 echo.
 echo.
 set /p web=Type option:
@@ -1443,35 +1549,679 @@ if "%web%"=="2" goto contextmenu
 if "%web%"=="3" goto explorermenu
 if "%web%"=="4" goto winsecuritymenu
 if "%web%"=="5" goto winsyssettings
-if "%web%"=="6" goto misc
-if "%web%"=="7" goto AdvTweak
-if "%web%"=="8" goto home
-if "%web%"=="9" exit
+if "%web%"=="6" goto WinPrograms
+if "%web%"=="7" goto misc
+if "%web%"=="8" goto AdvTweak
+if "%web%"=="9" goto home
+if "%web%"=="10" goto exit
 goto settweakmenu
 
-:winsyssettings
+
+:WinPrograms
 mode con:cols=80 lines=22
 echo.
-echo This Is Just A PlaceHolder For Next Edits.
+echo Here you can activate some Programs that are disabled by default.
+echo Currently needing ideas for more things here.
 echo.
 echo.
-echo 1) Manage Page File/Virtual Memory 
-echo 2) *PLACEHOLDER*
-echo 3) *PLACEHOLDER*
-echo 4) *PLACEHOLDER*
+echo 1) Try to install Group Policy Editor (Windows 10 Home)
+echo 2) Enable "Classic" Photo Viewer
+echo 3) PLACEHOLDER
+echo 4) PLACEHOLDER
 echo 5) Back
 echo 6) Exit
 echo.
 echo.
 set /p web=Type option:
-if "%web%"=="1" echo Coming soon
-if "%web%"=="2" echo Coming soon
-if "%web%"=="3" echo Coming soon
-if "%web%"=="4" echo Coming soon
-if "%web%"=="5" goto home
+if "%web%"=="1" goto GPInstaller
+if "%web%"=="2" goto PhotoviewerInstaller
+if "%web%"=="3" goto WinPrograms
+if "%web%"=="4" goto WinPrograms
+if "%web%"=="5" goto settweakmenu
 if "%web%"=="6" exit
+goto WinPrograms
+
+
+:PhotoviewerInstaller
+echo Windows Registry Editor Version 5.00 > .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\open] >> .\PhotoInstaller.reg
+echo "MuiVerb"="@photoviewer.dll,-3043" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Bitmap] >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo "FriendlyTypeName"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,\ >> .\PhotoInstaller.reg
+echo   00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,\ >> .\PhotoInstaller.reg
+echo   77,00,73,00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,\ >> .\PhotoInstaller.reg
+echo   00,65,00,72,00,5c,00,50,00,68,00,6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   65,00,72,00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,35,00,36,00,00,\ >> .\PhotoInstaller.reg
+echo   00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Bitmap\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\imageres.dll,-70" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Bitmap\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Bitmap\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\print] >> .\PhotoInstaller.reg
+echo "NeverDefault"="" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\print\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\Applications\photoviewer.dll\shell\print\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{60fd46de-f830-4894-a628-6fa81bc0190d}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.JFIF] >> .\PhotoInstaller.reg
+echo "EditFlags"=dword:00010000 >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo "FriendlyTypeName"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,\ >> .\PhotoInstaller.reg
+echo   00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,\ >> .\PhotoInstaller.reg
+echo   77,00,73,00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,\ >> .\PhotoInstaller.reg
+echo   00,65,00,72,00,5c,00,50,00,68,00,6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   65,00,72,00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,35,00,35,00,00,\ >> .\PhotoInstaller.reg
+echo   00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.JFIF\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\imageres.dll,-72" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.JFIF\shell\open] >> .\PhotoInstaller.reg
+echo "MuiVerb"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,\ >> .\PhotoInstaller.reg
+echo   69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,\ >> .\PhotoInstaller.reg
+echo   00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,\ >> .\PhotoInstaller.reg
+echo   72,00,5c,00,70,00,68,00,6f,00,74,00,6f,00,76,00,69,00,65,00,77,00,65,00,72,\ >> .\PhotoInstaller.reg
+echo   00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,34,00,33,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.JFIF\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.JFIF\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Jpeg] >> .\PhotoInstaller.reg
+echo "EditFlags"=dword:00010000 >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo "FriendlyTypeName"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,\ >> .\PhotoInstaller.reg
+echo   00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,\ >> .\PhotoInstaller.reg
+echo   77,00,73,00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,\ >> .\PhotoInstaller.reg
+echo   00,65,00,72,00,5c,00,50,00,68,00,6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   65,00,72,00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,35,00,35,00,00,\ >> .\PhotoInstaller.reg
+echo   00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Jpeg\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\imageres.dll,-72" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Jpeg\shell\open] >> .\PhotoInstaller.reg
+echo "MuiVerb"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,\ >> .\PhotoInstaller.reg
+echo   69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,\ >> .\PhotoInstaller.reg
+echo   00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,\ >> .\PhotoInstaller.reg
+echo   72,00,5c,00,70,00,68,00,6f,00,74,00,6f,00,76,00,69,00,65,00,77,00,65,00,72,\ >> .\PhotoInstaller.reg
+echo   00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,34,00,33,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Jpeg\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Jpeg\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Gif] >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo "FriendlyTypeName"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,\ >> .\PhotoInstaller.reg
+echo   00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,\ >> .\PhotoInstaller.reg
+echo   77,00,73,00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,\ >> .\PhotoInstaller.reg
+echo   00,65,00,72,00,5c,00,50,00,68,00,6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   65,00,72,00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,35,00,37,00,00,\ >> .\PhotoInstaller.reg
+echo   00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Gif\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\imageres.dll,-83" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Gif\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Gif\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Png] >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo "FriendlyTypeName"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,\ >> .\PhotoInstaller.reg
+echo   00,46,00,69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,\ >> .\PhotoInstaller.reg
+echo   77,00,73,00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,\ >> .\PhotoInstaller.reg
+echo   00,65,00,72,00,5c,00,50,00,68,00,6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   65,00,72,00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,35,00,37,00,00,\ >> .\PhotoInstaller.reg
+echo   00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Png\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\imageres.dll,-71" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Png\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Png\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Wdp] >> .\PhotoInstaller.reg
+echo "EditFlags"=dword:00010000 >> .\PhotoInstaller.reg
+echo "ImageOptionFlags"=dword:00000001 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Wdp\DefaultIcon] >> .\PhotoInstaller.reg
+echo @="%SystemRoot%\\System32\\wmphoto.dll,-400" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Wdp\shell\open] >> .\PhotoInstaller.reg
+echo "MuiVerb"=hex(2):40,00,25,00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,\ >> .\PhotoInstaller.reg
+echo   69,00,6c,00,65,00,73,00,25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,\ >> .\PhotoInstaller.reg
+echo   00,20,00,50,00,68,00,6f,00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,\ >> .\PhotoInstaller.reg
+echo   72,00,5c,00,70,00,68,00,6f,00,74,00,6f,00,76,00,69,00,65,00,77,00,65,00,72,\ >> .\PhotoInstaller.reg
+echo   00,2e,00,64,00,6c,00,6c,00,2c,00,2d,00,33,00,30,00,34,00,33,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Wdp\shell\open\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\PhotoViewer.FileAssoc.Wdp\shell\open\DropTarget] >> .\PhotoInstaller.reg
+echo "Clsid"="{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\Image Preview\command] >> .\PhotoInstaller.reg
+echo @=hex(2):25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,00,25,\ >> .\PhotoInstaller.reg
+echo   00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,72,00,75,00,\ >> .\PhotoInstaller.reg
+echo   6e,00,64,00,6c,00,6c,00,33,00,32,00,2e,00,65,00,78,00,65,00,20,00,22,00,25,\ >> .\PhotoInstaller.reg
+echo   00,50,00,72,00,6f,00,67,00,72,00,61,00,6d,00,46,00,69,00,6c,00,65,00,73,00,\ >> .\PhotoInstaller.reg
+echo   25,00,5c,00,57,00,69,00,6e,00,64,00,6f,00,77,00,73,00,20,00,50,00,68,00,6f,\ >> .\PhotoInstaller.reg
+echo   00,74,00,6f,00,20,00,56,00,69,00,65,00,77,00,65,00,72,00,5c,00,50,00,68,00,\ >> .\PhotoInstaller.reg
+echo   6f,00,74,00,6f,00,56,00,69,00,65,00,77,00,65,00,72,00,2e,00,64,00,6c,00,6c,\ >> .\PhotoInstaller.reg
+echo   00,22,00,2c,00,20,00,49,00,6d,00,61,00,67,00,65,00,56,00,69,00,65,00,77,00,\ >> .\PhotoInstaller.reg
+echo   5f,00,46,00,75,00,6c,00,6c,00,73,00,63,00,72,00,65,00,65,00,6e,00,20,00,25,\ >> .\PhotoInstaller.reg
+echo   00,31,00,00,00 >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\Image Preview\DropTarget] >> .\PhotoInstaller.reg
+echo "{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}"="" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities] >> .\PhotoInstaller.reg
+echo "ApplicationDescription"="@%ProgramFiles%\\Windows Photo Viewer\\photoviewer.dll,-3069" >> .\PhotoInstaller.reg
+echo "ApplicationName"="@%ProgramFiles%\\Windows Photo Viewer\\photoviewer.dll,-3009" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations] >> .\PhotoInstaller.reg
+echo ".cr2"="PhotoViewer.FileAssoc.Tiff" >> .\PhotoInstaller.reg
+echo ".jpg"="PhotoViewer.FileAssoc.Jpeg" >> .\PhotoInstaller.reg
+echo ".wdp"="PhotoViewer.FileAssoc.Wdp" >> .\PhotoInstaller.reg
+echo ".jfif"="PhotoViewer.FileAssoc.JFIF" >> .\PhotoInstaller.reg
+echo ".dib"="PhotoViewer.FileAssoc.Bitmap" >> .\PhotoInstaller.reg
+echo ".png"="PhotoViewer.FileAssoc.Png" >> .\PhotoInstaller.reg
+echo ".jxr"="PhotoViewer.FileAssoc.Wdp" >> .\PhotoInstaller.reg
+echo ".bmp"="PhotoViewer.FileAssoc.Bitmap" >> .\PhotoInstaller.reg
+echo ".jpe"="PhotoViewer.FileAssoc.Jpeg" >> .\PhotoInstaller.reg
+echo ".jpeg"="PhotoViewer.FileAssoc.Jpeg" >> .\PhotoInstaller.reg
+echo ".gif"="PhotoViewer.FileAssoc.Gif" >> .\PhotoInstaller.reg
+echo ".tif"="PhotoViewer.FileAssoc.Tiff" >> .\PhotoInstaller.reg
+echo ".tiff"="PhotoViewer.FileAssoc.Tiff" >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+echo. >> .\PhotoInstaller.reg
+reg import .\PhotoInstaller.reg
+pause
+del .\PhotoInstaller.reg
+goto WinPrograms
+
+:GPInstaller
+::This tweak is thanks to MajorGeeks
+pushd "%~dp0" 
+
+dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt 
+dir /b %SystemRoot%\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt 
+
+for /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:"%SystemRoot%\servicing\Packages\%%i" 
+pause
+goto WinPrograms
+
+:winsyssettings
+mode con:cols=80 lines=22
+echo.
+echo Here you can easily change some advanced Windows settings.
+echo.
+echo.
+echo 1) Manage Page File/Virtual Memory 
+echo 2) BSOD Disable Automatic Restart
+echo 3) BSOD Enable Automatic Restart
+echo 4) Enable Built-In Administrator Account (If it Exists)
+echo 5) Disable Built-In Administrator Account
+echo 6) Enable Developer Mode (For Unsigned Appx Packages)
+echo 7) Disable Developer Mode
+echo 8) Enable Unsigned Fonts
+echo 9) Disable Unsigned Fonts (Usually for Security)
+echo 10) Windows Ink and Typing
+echo 11) Power Options
+echo 12) Back
+echo 13) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" goto winpagefile
+if "%web%"=="2" cls && wmic RecoverOS set AutoReboot = False && pause && goto winsyssettings
+if "%web%"=="3" cls && wmic RecoverOS set AutoReboot = True && pause && goto winsyssettings
+if "%web%"=="4" cls net user Administrator /active:yes && pause && goto winsyssettings
+if "%web%"=="5" cls net user Administrator /active:no && pause && goto winsyssettings
+if "%web%"=="6" reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1 && pause && goto winsyssettings
+if "%web%"=="7" reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 0 && pause && goto winsyssettings
+if "%web%"=="8" reg delete "HKLM\Software\Policies\Microsoft\Windows NT\MitigationOptions" /v MitigationOptions_FontBocking /f && pause && goto winsyssettings
+if "%web%"=="9" reg add "HKLM\Software\Policies\Microsoft\Windows NT\MitigationOptions" /v MitigationOptions_FontBocking /t REG_DWORD /d 1 /f && pause && goto winsyssettings
+if "%web%"=="10" goto WinInk
+if "%web%"=="11" goto PowerOptionsMenu
+if "%web%"=="12" goto settweakmenu
+if "%web%"=="13" exit
 goto winsyssettings
 
+:PowerOptionsMenu
+mode con:cols=80 lines=22
+cls
+echo.
+echo Here you can modify your systems Power Plans
+echo BE CAUTIOUS: You could screw things up if not careful
+echo.
+echo 1) View Available Plans
+echo 2) View Evergy Report
+echo 3) Change Power Plan
+echo 4) Enable"Ultimate Performance" Plan (If PC Supports, 1803 and Up)
+echo 5) Hard Drive Timeout
+echo 6) Wireless Power Saving
+echo 7) Back
+echo 8) Exit
+echo.
+set /p web=Type option:
+if "%web%"=="1" goto ViewPowerPlans
+if "%web%"=="2" goto ViewEnergyRep
+if "%web%"=="3" goto ChangePowerPlan
+if "%web%"=="4" goto PowerUltimate
+if "%web%"=="5" goto HDDTimeout
+if "%web%"=="6" goto WifiSave
+if "%web%"=="7" goto settweakmenu
+if "%web%"=="8" goto home
+goto PowerOptionsMenu
+
+:ViewPowerPlans
+cls
+echo This will list currently available Power Plans for your PC..
+pause
+powercfg /list
+pause
+goto PowerOptionsMenu
+
+:ChangePowerPlan
+cls
+echo Please make sure you have viewed what Plans are available to your PC
+echo Not all of these will be available.
+echo.
+echo (MaximumPerformance)
+echo (TimersOff)
+echo (Balanced)
+echo (MaximumBatteryLife)
+echo (VideoPlayback)
+echo (HighPerformance)
+echo (PowerSourceOptimized)
+echo (Powersaver)
+echo B) Back
+echo.
+set /P pwrcfg=Type plan WITHOUT brackets or B for Back:
+if "%pwrcfg%"=="MaximumPerformance" powercfg -setactive 01360e7e-525f-4625-ab94-f283dcfbd515 && echo Done.
+if "%pwrcfg%"=="TimersOff" powercfg -setactive 25703703-e852-4c6a-b8d5-b36dd2e3f757 && echo Done.
+if "%pwrcfg%"=="Balanced" powercfg -setactive 381b4222-f694-41f0-9685-ff5bb260df2e && echo Done.
+if "%pwrcfg%"=="MaximumBatteryLife" powercfg -setactive 4ac93938-c0ab-4b33-9150-b71bf11e59d3 && echo Done.
+if "%pwrcfg%"=="VideoPlayback" powercfg -setactive 6aea82bd-cf7f-424c-aee8-7dba1ee06330 && echo Done.
+if "%pwrcfg%"=="HighPerformance" powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c && echo Done.
+if "%pwrcfg%"=="PowerSourceOptimized" powercfg -setactive 8ce8c17f-8bb0-4d23-98d1-ae3311cbee5a && echo Done.
+if "%pwrcfg%"=="Powersaver" powercfg -setactivea1841308-3541-4fab-bc81-f71556f20b4a && echo Done.
+if "%pwrcfg%"=="B" goto PowerOptionsMenu
+goto ChangePowerPlan
+
+:PowerUltimate
+cls
+powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+powercfg -setactive e9a42b02-d5df-448d-aa00-03f14749eb61
+pause
+goto PowerOptionsMenu
+goto
+:HDDTimeout
+cls
+mode con:cols=80 lines=22
+echo.
+echo Here you can use a specific timeout for Hard Drives to sleep.
+echo After you press enter you'll go back to the last menu.
+echo.
+echo.
+set /p hddtime=Type time in Seconds (0 to Disable):
+powercfg -setdcvalueindex 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c 0012ee47-9041-4b5d-9b77-535fba8b1442 6738e2c4-e8a5-4a42-b16a-e040e769756e %hddtime%
+pause
+goto PowerOptionsMenu
+:WifiSave
+cls
+echo.
+echo Here you can adjust Wireless Adapter Power Saving
+echo *This needs more testing, I had success changing this but others haven't*
+echo 0 = Maximum Performance
+echo 1
+echo 2
+echo 3
+echo 4
+echo 5 = Max Power Saving
+echo 6) Back
+set /P wifiyesno=Type number, 6 to go Back:
+powercfg /SETDCVALUEINDEX SCHEME_CURRENT 19cbb8fa-5279-450e-9fac-8a3d5fedd0c1 12bbebe6-58d6-4636-95bb-3217ef867c1a %wifiyesno%
+pause
+goto PowerOptionsMenu
+
+:ViewEnergyRep
+cls
+echo More accurate reported are Generated if ALL other Applications
+echo are closed except this window
+pause
+echo.
+powercfg -energy
+C:/Windows/system32/energy-report.html
+pause
+goto PowerOptionsMenu
+
+:WinInk
+cls
+mode con:cols=80 lines=22
+echo.
+echo Here you can change Windows Inking and Typing settings.
+echo The list here is small at the moment, please suggest things.
+echo.
+echo 1) Disable Learing (Getting to Know You)
+echo 2) Enable Learning
+echo 3) Explorer-based Textbox Auto Complete ON
+echo 4) Explorer-based Textbox Auto Complete OFF
+echo 5) Back
+echo 6) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" call :NoInkLearn
+if "%web%"=="2" call :YesInkLearn
+if "%web%"=="3" call :AutoText
+if "%web%"=="4" call :DropText
+if "%web%"=="5" 
+if "%web%"=="6" 
+goto WinInk
+
+:AutoText
+echo Windows Registry Editor Version 5.00 > .\AutoText.reg
+echo. >> .\AutoText.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete] >> .\AutoText.reg
+echo "Append Completion"="yes" >> .\AutoText.reg
+echo. >> .\AutoText.reg
+reg import .\AutoText.reg
+pause
+del .\AutoText.reg
+goto WinInk
+
+
+:DropText
+echo Windows Registry Editor Version 5.00 > .\DropText.reg
+echo. >> .\DropText.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete] >> .\DropText.reg
+echo "Append Completion"="no" >> .\DropText.reg
+echo. >> .\DropText.reg
+reg import .\DropText.reg
+pause
+del .\DropText.reg
+goto WinInk
+
+:NoInkLearn
+echo Windows Registry Editor Version 5.00 > .\NoInkLearn.reg
+echo. >> .\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization] >> .\NoInkLearn.reg
+echo "RestrictImplicitInkCollection"=dword:00000001 >> .\NoInkLearn.reg
+echo "RestrictImplicitTextCollection"=dword:00000001 >> .\NoInkLearn.reg
+echo. >> .\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore] >> .\NoInkLearn.reg
+echo "HarvestContacts"=dword:00000000 >> .\NoInkLearn.reg
+echo. >> .\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings] >> .\NoInkLearn.reg
+echo "AcceptedPrivacyPolicy"=dword:00000000 >> .\NoInkLearn.reg
+echo. >> .\NoInkLearn.reg
+reg import .\NoInkLearn.reg
+pause
+del .\NoInkLearn
+goto WinInk
+
+:YesInkLearn
+echo Windows Registry Editor Version 5.00 > .\YesInkLearn.reg
+echo. >> .\YesInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization] >> .\YesInkLearn.reg
+echo "RestrictImplicitInkCollection"=dword:00000000 >> .\YesInkLearn.reg
+echo "RestrictImplicitTextCollection"=dword:00000000 >> .\YesInkLearn.reg
+echo. >> .\YesInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore] >> .\YesInkLearn.reg
+echo "HarvestContacts"=dword:00000001 >> .\YesInkLearn.reg
+echo. >> .\YesInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings] >> .\YesInkLearn.reg
+echo "AcceptedPrivacyPolicy"=dword:00000001 >> .\YesInkLearn.reg
+echo. >> .\YesInkLearn.reg
+reg import .\YesInkLearn.reg
+pause
+del .\YesInkLearn
+goto WinInk
+
+:winpagefile
+mode con:cols=80 lines=22
+echo.
+echo Here we can modify the Page File/Virtual Memory
+echo Changing Drive location coming soon
+echo.
+echo.
+echo 1) View Current Page File Settings
+echo 2) Increase Page File
+echo 3) Decrease Page File
+echo 4) Disable Page File
+echo 5) Enable Page File/Set Auto Page File
+echo 6) Clear Page File On Shutdown
+echo 7) Keep Page File Contents On Shutdown
+echo 8) Back
+echo 9) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" cls && wmic pagefile list /format:list && pause && goto winpagefile
+if "%web%"=="2" goto BiggerPaging
+if "%web%"=="3" goto SmallerPaging
+if "%web%"=="4" call :DisablePaging
+if "%web%"=="5" cls && wmic computersystem where name="%computername%" set AutomaticManagedPagefile=true && pause && goto winpagefile
+if "%web%"=="6" reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v ClearPageFileAtShutdown /t REG_DWORD /d 1 /f && pause && goto winpagefile
+if "%web%"=="7" reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v ClearPageFileAtShutdown /t REG_DWORD /d 0 /f && pause && goto winpagefile
+if "%web%"=="8" goto settweakmenu
+if "%web%"=="9" exit
+goto winpagefile
+
+:DisablePaging
+cls
+cls && wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=0,MaximumSize=0
+wmic pagefileset where name="C:\\pagefile.sys" delete
+pause
+goto winpagefile
+:BiggerPaging
+cls
+echo.
+echo Increase the values from 4096mb - 8192mb (Usually default with 8GB Ram)
+echo Key: MinimumSize -(to) MaximumSize  
+echo.
+echo 1) 5120 - 10240
+echo 2) 6144 - 10240
+echo 3) 7168 - 12288
+echo 4) 8192 - 12288
+echo 5) 9216 - 14336
+echo 6) Back
+echo 7) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" call :5120
+if "%web%"=="2" call :6144
+if "%web%"=="3" call :7168
+if "%web%"=="4" call :8192
+if "%web%"=="5" call :9216
+if "%web%"=="6" goto winpagefile
+if "%web%"=="7" exit
+goto BiggerPaging
+
+:5120
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=5120,MaximumSize=10240
+pause
+goto BiggerPaging
+:6144
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=6144,MaximumSize=10240
+pause
+goto BiggerPaging
+:7168
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=7168,MaximumSize=12288
+pause
+goto BiggerPaging
+:8192
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=8192,MaximumSize=12288
+pause
+goto BiggerPaging
+:9216
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=8192,MaximumSize=14336
+pause
+goto BiggerPaging
+
+:SmallerPaging
+cls
+echo.
+echo Decrease the values 
+echo Key: MinimumSize -(to) MaximumSize  
+echo.
+echo 1) 4096 - 8192 (Usually default with 8GB Ram)
+echo 2) 3072 - 6144
+echo 3) 2048 - 4096
+echo 4) 1024 - 2048
+echo 5) Back
+echo 6) Exit
+echo.
+echo.
+set /p web=Type option:
+if "%web%"=="1" call :4096
+if "%web%"=="2" call :3072
+if "%web%"=="3" call :2048
+if "%web%"=="4" call :1024
+if "%web%"=="5" goto winpagefile
+if "%web%"=="6" exit
+goto SmallerPaging
+:4096
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=4096,MaximumSize=8192)
+pause
+goto SmallerPaging
+
+:3072
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=3072,MaximumSize=6144
+pause
+goto SmallerPaging
+
+:2048
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=2048,MaximumSize=4096
+pause
+goto SmallerPaging
+:1024
+cls
+wmic computersystem where name="%computername%" set AutomaticManagedPagefile=false
+wmic pagefileset where name="C:\\pagefile.sys" set InitialSize=1024,MaximumSize=2048
+pause
+goto SmallerPaging
 :AdvTweak
 mode con:cols=80 lines=22
 echo.
@@ -1661,41 +2411,43 @@ echo.
 echo.
 echo 1) Enable Taskbar Transparency (Usually Default)
 echo 2) Disable Taskbar Transparency
-echo 3) Allow Windows To Automatically Clear Thumbnail Cache
-echo 4) Stop Windows To Automatically Clear Thumbnail Cache
-echo 5) Enable Old Volume Control Fly-out
-echo 6) Disable Old Volume Control Fly-out (Usually Default)
-echo 7) Enable Auto Hiding of Scrollbar in UWP Apps (Usually Default)
-echo 8) Disable Auto Hiding of Scrollbar in UWP Apps
-echo 9) Show Windows Build Version and Number on Desktop
-echo 10) Hide Windows Build Version and Number on Desktop
-echo 11) Enable Shortcut Name Extensions (Usually Default)
-echo 12) Disable Shortcut Name Extensions
-echo 13) Enable Fixing of Blurry Programs
-echo 14) Disable Fixing of Blurry Programs
-echo 15) Restore Windows Default DPI Scailing
-echo 16) Back
-echo 17) Exit
+echo 3) Increase Taskbar Transparency
+echo 4) Allow Windows To Automatically Clear Thumbnail Cache
+echo 5) Stop Windows To Automatically Clear Thumbnail Cache
+echo 6) Enable Old Volume Control Fly-out
+echo 7) Disable Old Volume Control Fly-out (Usually Default)
+echo 8) Enable Auto Hiding of Scrollbar in UWP Apps (Usually Default)
+echo 9) Disable Auto Hiding of Scrollbar in UWP Apps
+echo 10) Show Windows Build Version and Number on Desktop
+echo 11) Hide Windows Build Version and Number on Desktop
+echo 12) Enable Shortcut Name Extensions (Usually Default)
+echo 13) Disable Shortcut Name Extensions
+echo 14) Enable Fixing of Blurry Programs
+echo 15) Disable Fixing of Blurry Programs
+echo 16) Restore Windows Default DPI Scailing
+echo 17) Back
+echo 18) Exit
 echo.
 echo.
 set /p web=Type option:
-if "%web%"=="1" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseOLEDTaskbarTransparency /t REG_DWORD /d 1 /f && reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v ForceEffectMode /t REG_DWORD /d 1 /f && pause && goto appearance
-if "%web%"=="2" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseOLEDTaskbarTransparency /t REG_DWORD /d 0 /f && reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v ForceEffectMode /t REG_DWORD /d 0 /f && pause && goto appearance
-if "%web%"=="3" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && pause && goto appearance
-if "%web%"=="4" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && pause && goto appearance
-if "%web%"=="5" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" /v EnableMtcUvc /t REG_DWORD /d 0 /f && pause && goto appearance
-if "%web%"=="6" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" /v EnableMtcUvc /t REG_DWORD /d 1 /f && pause && goto appearance
-if "%web%"=="7" reg add "HKCU\Control Panel\Accessibility" /v DynamicScrollbars /t REG_DWORD /d 1 /f && pause && goto appearance
-if "%web%"=="8" reg add "HKCU\Control Panel\Accessibility" /v DynamicScrollbars /t REG_DWORD /d 0 /f && pause && goto appearance
-if "%web%"=="9" reg add "HKCU\\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="1" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableTransparency /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="2" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableTransparency /t REG_DWORD /d 0 /f && pause && goto appearance
+if "%web%"=="3" reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseOLEDTaskbarTransparency /t REG_DWORD /d 1 && reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v ForceEffectMode /t REG_DWORD /d 1 /f &&  pause && goto appearance 
+if "%web%"=="4" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && pause && goto appearance
+if "%web%"=="5" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="6" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" /v EnableMtcUvc /t REG_DWORD /d 0 /f && pause && goto appearance
+if "%web%"=="7" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" /v EnableMtcUvc /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="8" reg add "HKCU\Control Panel\Accessibility" /v DynamicScrollbars /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="9" reg add "HKCU\Control Panel\Accessibility" /v DynamicScrollbars /t REG_DWORD /d 0 /f && pause && goto appearance
 if "%web%"=="10" reg add "HKCU\\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 1 /f && pause && goto appearance
-if "%web%"=="11" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 15000000 /f && pause && goto appearance
-if "%web%"=="12" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 00000000 /f && pause && goto appearance
-if "%web%"=="13" call :fixscale
-if "%web%"=="14" call :nofixscale
-if "%web%"=="15" call :defaultdpiset
-if "%web%"=="16" goto settweakmenu
-if "%web%"=="17" exit
+if "%web%"=="11" reg add "HKCU\\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 1 /f && pause && goto appearance
+if "%web%"=="12" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 15000000 /f && pause && goto appearance
+if "%web%"=="13" reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d 00000000 /f && pause && goto appearance
+if "%web%"=="14"  call :fixscale
+if "%web%"=="15"  call :nofixscale
+if "%web%"=="16"  call :defaultdpiset
+if "%web%"=="17" goto settweakmenu
+if "%web%"=="18" goto exit
 goto appearance
 
 :defaultdpiset
