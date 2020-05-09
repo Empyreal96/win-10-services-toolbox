@@ -1,4 +1,5 @@
 @echo off
+title Windows 10 Toolbox by Empyreal96
 color 7D
 mode con:cols=102 lines=32
 CLS
@@ -1553,7 +1554,7 @@ if "%web%"=="6" goto WinPrograms
 if "%web%"=="7" goto misc
 if "%web%"=="8" goto AdvTweak
 if "%web%"=="9" goto home
-if "%web%"=="10" goto exit
+if "%web%"=="10" exit
 goto settweakmenu
 
 
@@ -2019,8 +2020,8 @@ if "%web%"=="1" call :NoInkLearn
 if "%web%"=="2" call :YesInkLearn
 if "%web%"=="3" call :AutoText
 if "%web%"=="4" call :DropText
-if "%web%"=="5" 
-if "%web%"=="6" 
+if "%web%"=="5" goto winsyssettings
+if "%web%"=="6" exit
 goto WinInk
 
 :AutoText

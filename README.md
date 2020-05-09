@@ -1,13 +1,12 @@
 # Windows 10 Toolkit
 
-
-**Windows-Toolkit.cmd** (Current Project) - An evergrowing toolkit to modify many aspects of Windows.
+**Windows-Toolkit.cmd** (Current Project) - An ever-growing toolkit to modify many aspects of Windows.
 
 **Supported Versions** = Windows 10 64/32 Bit and ARM64, I use on Pro 64bit+ARM64 and Home 32bit+ARM64.
 
 **Any Risks?** = There will _always_ be risk when modifying parts of Windows, make a Restore Point beforehand if worried.
 
-**Requirements** = Access to Admin privilages. Knowledge of what you are wanting to do.
+**Requirements** = Access to Admin privileges. Knowledge of what you are wanting to do.
 
 **Please add your suggestions for what I should add to it in the Issues Tab, along with any bugs**
 
@@ -25,7 +24,7 @@
 
 - Start/Stop Windows Search
 
-- Enable "Immersive Fullscreen Search with Rounded Corners"
+- Enable "Immersive Full screen Search with Rounded Corners"
 
 **Cortana:**
 
@@ -35,7 +34,7 @@
 
 **Windows Spotlight:**
 
-- Enable/Disable "Fun Facts" on Lockscreen
+- Enable/Disable "Fun Facts" on Lock screen
 
 - Enable/Disable Spotlight Wallpapers
 
