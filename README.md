@@ -10,6 +10,8 @@
 
 **Please add your suggestions for what I should add to it in the Issues Tab, along with any bugs**
 
+#### **[Download](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/Windows-Toolkit.cmd)**
+
 ## What it can do:
 
 **Windows Update:**
