@@ -1,6 +1,6 @@
 # Windows 10 Toolkit
 
-**Windows-Toolkit.cmd** (Current Project) - An ever-growing toolkit to modify many aspects of Windows.
+**Windows-Toolkit.cmd** (Current in transition to C# GUI) - An ever-growing toolkit to modify many aspects of Windows.
 
 **Supported Versions** = Windows 10 64/32 Bit and ARM64, I use on Pro 64bit+ARM64 and Home 32bit+ARM64.
 
