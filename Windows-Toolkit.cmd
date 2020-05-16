@@ -2434,7 +2434,7 @@ echo.
 set /p web=Type option:
 if "%web%"=="1" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableTransparency /t REG_DWORD /d 1 /f && pause && goto appearance
 if "%web%"=="2" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" /v EnableTransparency /t REG_DWORD /d 0 /f && pause && goto appearance
-if "%web%"=="3" reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseOLEDTaskbarTransparency /t REG_DWORD /d 1 && reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v ForceEffectMode /t REG_DWORD /d 1 /f &&  pause && goto appearance 
+if "%web%"=="3" reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v UseOLEDTaskbarTransparency /t REG_DWORD /d 1 /f && reg add "HKLM\SOFTWARE\Microsoft\Windows\Dwm" /v ForceEffectMode /t REG_DWORD /d 1 /f &&  pause && goto appearance 
 if "%web%"=="4" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 0 /f && pause && goto appearance
 if "%web%"=="5" reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && reg add "HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\Thumbnail Cache" /v Autorun /t REG_DWORD /d 1 /f && pause && goto appearance
 if "%web%"=="6" reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC" /v EnableMtcUvc /t REG_DWORD /d 0 /f && pause && goto appearance
@@ -2706,8 +2706,6 @@ goto contextmenu
 echo Windows Registry Editor Version 5.00 > .\RemoveCab.reg
 echo. >> .\RemoveCab.reg
 echo [-HKEY_CLASSES_ROOT\CABFolder\Shell\RunAs] >> .\RemoveCab.reg
-echo. >> .\RemoveCab.reg
-echo. >> .\RemoveCab.reg
 echo. >> .\RemoveCab.reg
 reg import .\RemoveCab.reg
 pause
@@ -3256,10 +3254,10 @@ goto explorermenu
 
 
 :AddQuick
-reg add "HKLM\\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v HubMode /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v HubMode /t REG_DWORD /d 0 /f
 goto explorermenu
 :RemoveQuick
-reg add "HKLM\\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v HubMode /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v HubMode /t REG_DWORD /d 1 /f
 goto explorermenu
 
 :ShowExten
@@ -3565,7 +3563,7 @@ if "%web%"=="10" reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Secu
 if "%web%"=="11" reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Policy Manager" /v DisableScanningNetworkFiles /t REG_DWORD /d 0 /f && pause
 if "%web%"=="12 reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Policy Manager" /v DisableScanningNetworkFiles /t REG_DWORD /d 1 /f && pause
 if "%web%"=="13" reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Device performance and health" /v UILockdown /t REG_DWORD /d 0 /f && pause
-if "%web%"=="14" call reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Device performance and health" /v UILockdown /t REG_DWORD /d 1 /f && pause
+if "%web%"=="14" reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender Security Center\Device performance and health" /v UILockdown /t REG_DWORD /d 1 /f && pause
 if "%web%"=="15" goto settweakmenu
 if "%web%"=="16" exit
 goto winsecuritymenu
