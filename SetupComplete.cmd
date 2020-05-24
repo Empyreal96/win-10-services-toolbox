@@ -49,26 +49,22 @@
  setlocal & cd /d %~dp0
  if '%1'=='ELEV' (del "%vbsGetPrivileges%" 1>nul 2>nul  &  shift /1)
 
- ::::::::::::::::::::::::::::
- ::START
- ::::::::::::::::::::::::::::
- REM Run shell as admin 
-
-echo "making sure SetupComplete runs" > c:\test.txt
-#Disable Hibernation
+mkdir C:\SetupLogs
+echo "making sure SetupComplete runs" > C:\SetupLogs\SetupComp1.txt
+echo Disable Hibernation > C:\SetupLogs\HiberOff.txt
 powercfg -h off
 
-#Disable Error Reporting Service
+echo Disable Error Reporting Service > C:\SetupLogs\DisErrorRep.txt
 reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
 sc stop WerSvc
 sc.exe config WerSvc start=disabled
 
-#Disable Memory Dump Creation
+echo Disable Memory Dump Creation > C:\SetupLogs\MemDump.txt
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\CrashControl" /v CrashDumpEnabled /t REG_DWORD /d 0 /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\CrashControl" /v LogEvent /t REG_DWORD /d 0 /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\CrashControl" /v SendAlert /t REG_DWORD /d 0 /f
 
-#Disable Telemetry Tasks (taken from parts of Tron scripts - https://github.com/bmrf/tron )
+echo Disable Telemetry Tasks (taken from parts of Tron scripts - https://github.com/bmrf/tron ) > C:\SetupLogs\TelemTron.txt
 schtasks /delete /F /TN "\Microsoft\Windows\Autochk\Proxy"
 schtasks /delete /F /TN "\Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask"
 schtasks /delete /F /TN "\Microsoft\Windows\Windows Error Reporting\QueueReporting"
@@ -87,7 +83,7 @@ reg add "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\DataCollection" /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /f /v "Start" /t REG_DWORD /d 4 >NUL 2>&1
 reg add "HKLM\SYSTEM\CurrentControlSet\Services\dmwappushservice" /f /v "Start" /t REG_DWORD /d 4 >NUL 2>&1
 
-#Stopping any *unneeded* services remaining
+echo Stopping any *unneeded* services remaining > C:\SetupLogs\UnneedSvc.txt
 sc.exe stop DiagTrack
 sc.exe config DiagTrack start=disabled
 sc.exe stop DPS
@@ -113,6 +109,7 @@ sc.exe config WbioSrvc start=disabled
 sc.exe stop WMPNetworkSvc
 sc.exe config WMPNetworkSvc start=disabled
 sc.exe stop EntAppSvc
+reg add "HKLM\System\CurrentControlSet\Services\EntAppSvc" /v Start /t REG_DWORD /d 4 /f
 sc.exe config EntAppSvc start=disabled
 sc.exe stop HvHost
 sc.exe config HvHost start=disabled
@@ -180,5 +177,129 @@ sc.exe stop Wecsvc
 sc.exe config Wecsvc start=disabled
 sc.exe stop spectrum
 sc.exe config spectrum start=disabled
+sc.exe stop XtaCache
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\XtaCache" /v start /t REG_DWORD /d 4 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\DoSvc" /v Start /t REG_DWORD /d 4 /f
 
+echo Update Removal > C:\SetupLogs\UpdRem.txt
+::KB 2902907 (https://support.microsoft.com/en-us/kb/2902907)
+wusa /uninstall /kb:2902907 /norestart /quiet
+::KB 2922324 (https://support.microsoft.com/en-us/kb/2922324)
+wusa /uninstall /kb:2922324 /norestart /quiet
+::KB 2952664 (https://support.microsoft.com/en-us/kb/2952664)
+wusa /uninstall /kb:2952664 /norestart /quiet
+::KB 2976978 (https://support.microsoft.com/en-us/kb/2976978)
+wusa /uninstall /kb:2976978 /norestart /quiet
+::KB 2977759 (https://support.microsoft.com/en-us/kb/2977759)
+wusa /uninstall /kb:2977759 /norestart /quiet
+::KB 2990214 (https://support.microsoft.com/en-us/kb/2990214)
+wusa /uninstall /kb:2990214 /norestart /quiet
+::KB 3012973 (https://support.microsoft.com/en-us/kb/3012973)
+wusa /uninstall /kb:3012973 /norestart /quiet
+::KB 3014460 (https://support.microsoft.com/en-us/kb/3014460)
+wusa /uninstall /kb:3014460 /norestart /quiet
+::KB 3015249 (https://support.microsoft.com/en-us/kb/3015249)
+wusa /uninstall /kb:3015249 /norestart /quiet
+::KB 3021917 (https://support.microsoft.com/en-us/kb/3021917)
+wusa /uninstall /kb:3021917 /norestart /quiet
+::KB 3022345 (https://support.microsoft.com/en-us/kb/3022345)
+wusa /uninstall /kb:3022345 /norestart /quiet
+::KB 3035583 (https://support.microsoft.com/en-us/kb/3035583)
+wusa /uninstall /kb:3035583 /norestart /quiet
+::KB 3044374 (https://support.microsoft.com/en-us/kb/3044374)
+wusa /uninstall /kb:3044374 /norestart /quiet
+::KB 3050265 (https://support.microsoft.com/en-us/kb/3050265)
+wusa /uninstall /kb:3050265 /norestart /quiet
+::KB 3050267 (https://support.microsoft.com/en-us/kb/3050267)
+wusa /uninstall /kb:3050267 /norestart /quiet
+::KB 3065987 (https://support.microsoft.com/en-us/kb/3065987)
+wusa /uninstall /kb:3065987 /norestart /quiet
+::KB 3068708 (https://support.microsoft.com/en-us/kb/3068708)
+wusa /uninstall /kb:3068708 /norestart /quiet
+::KB 3075249 (https://support.microsoft.com/en-us/kb/3075249)
+wusa /uninstall /kb:3075249 /norestart /quiet
+::KB 3075851 (https://support.microsoft.com/en-us/kb/3075851)
+wusa /uninstall /kb:3075851 /norestart /quiet
+::KB 3075853 (https://support.microsoft.com/en-us/kb/3075853)
+wusa /uninstall /kb:3075853 /norestart /quiet
+::KB 3080149 (https://support.microsoft.com/en-us/kb/3080149)
+wusa /uninstall /kb:3080149 /norestart /quiet
+::Additional KB entries removed by Microsoft; originally associated with telemetry
+wusa /uninstall /kb:2976987 /norestart /quiet
+wusa /uninstall /kb:3068707 /norestart /quiet
+
+echo Disable Cortana Reg > C:\SetupLogs\CortOff.txt
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v BingSearchEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v  AllowSearchToUseLocation /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v  CortanaConsent  /t REG_DWORD /d 0 /f
+
+echo Spotlight Disable Reg > C:\SetupLogs\SpotOff.txt
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v ContentDeliveryAllowed /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenOverlayEnabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Policies\Microsoft\Windows\CloudContent" /v DisableWindowsSpotlightFeatures /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization" /v NoChangingLockScreen /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-338388Enabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-338389Enabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SubscribedContent-353696Enabled /t REG_DWORD /d 0 /f
+reg load HKLM\defuser %USERPROFILES%\default\ntuser.dat >NUL 2>&1
+reg add "HKLM\defuser\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v RotatingLockScreenOverlayEnabled /t REG_DWORD /d 0 /f >NUL 2>&1
+reg unload HKLM\defuser >NUL 2>&1
+
+echo Telemetry and Privacy Reg > C:\SetupLogs\TelemReg.txt
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v AllowTelemetry /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v PreventDeviceMetadataFromNetwork /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v DontOfferThroughWUAU /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows" /v "CEIPEnable" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v Start /t REG_DWORD /d 0 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SQMLogger" /v Start /t REG_DWORD /d 0 /f
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\AutoLogger-Diagtrack-Listener" /v Start /t REG_DWORD /d 0 /f
+reg add "HKLM\Software\Microsoft\wcmsvc\wifinetworkmanager" /v wifisensecredshared /t REG_DWORD /d 0 /f
+reg add "HKLM\Software\Microsoft\wcmsvc\wifinetworkmanager" /v wifisenseopen /t REG_DWORD /d 0 /f
+reg add "HKLM\Software\Microsoft\Windows Defender\spynet" /v spynetreporting /t REG_DWORD /d 0 /f
+reg add "HKLM\Software\Microsoft\Windows Defender\spynet" /v submitsamplesconsent /t REG_DWORD /d 0 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v SubmitSamplesConcent /t REG_DWORD /d 2 /f
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v SpynetReporting /t REG_DWORD /d 0 /f
+reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\AppHost" /v EnableWebContentEvaluation /t REG_DWORD /d 0 /f 
+echo Windows Registry Editor Version 5.00 > C:\SetupLogs\NoInkLearn.reg
+echo. >> C:\SetupLogs\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization] >> C:\SetupLogs\NoInkLearn.reg
+echo "RestrictImplicitInkCollection"=dword:00000001 >> C:\SetupLogs\NoInkLearn.reg
+echo "RestrictImplicitTextCollection"=dword:00000001 >> C:\SetupLogs\NoInkLearn.reg
+echo. >> C:\SetupLogs\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore] >> C:\SetupLogs\NoInkLearn.reg
+echo "HarvestContacts"=dword:00000000 >> C:\SetupLogs\NoInkLearn.reg
+echo. >> C:\SetupLogs\NoInkLearn.reg
+echo [HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings] >> C:\SetupLogs\NoInkLearn.reg
+echo "AcceptedPrivacyPolicy"=dword:00000000 >> C:\SetupLogs\NoInkLearn.reg
+echo. >> C:\SetupLogs\NoInkLearn.reg
+reg import C:\SetupLogs\NoInkLearn.reg
+reg add "HKCU\Software\Policies\Microsoft\Windows\EdgeUI" /v DisableMFUTracking /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo" /v Enabled /t REG_DWORD /d 0 /f
+echo Silent App Install Reg > C:\SetupLogs\SilentApp.txt
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v SilentInstalledAppsEnabled /t REG_DWORD /d 0 /f
+reg add "HKLM\System\CurrentControlSet\Control\Power" /v HibernateEnabled /t REG_DWORD /d 0 /f
+powercfg /hibernate off
+
+echo add kill task context > C:\SetupLogs\Killtask.txt
+echo Windows Registry Editor Version 5.00 > C:\SetupLogs\Killtask.reg
+echo. >> C:\SetupLogs\Killtask.reg
+echo [HKEY_CLASSES_ROOT\DesktopBackground\Shell\KillNRTasks] >> C:\SetupLogs\Killtask.reg
+echo "icon"="taskmgr.exe,-30651" >> C:\SetupLogs\Killtask.reg
+echo "MUIverb"="Kill Any Not Responding Tasks" >> C:\SetupLogs\Killtask.reg
+echo "Position"="Top" >> C:\SetupLogs\Killtask.reg
+echo. >> .C:\SetupLogs\Killtask.reg
+echo [HKEY_CLASSES_ROOT\DesktopBackground\Shell\KillNRTasks\command] >> C:\SetupLogs\Killtask.reg
+echo @="CMD.exe /C taskkill.exe /f /fi \"status eq Not Responding\" & Pause" >> C:\SetupLogs\Killtask.reg
+echo. >> C:\SetupLogs\Killtask.reg
+reg import C:\SetupLogs\Killtask.reg
+mkdir %userprofile%\Desktop\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}
+echo In theory its done > C:\SetupLogs\Complete.txt
 exit
