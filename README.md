@@ -102,9 +102,5 @@
 
 
 
-**Setup complete.cmd** - file used in my custom Win ARM image
-
-
-
 **Update-Service-Tool.bat** - A little batch to start and stop win updates on the go, also has some safe to disable services because its 
 pulled from my main project over at XDA which is ongoing work in progress.
