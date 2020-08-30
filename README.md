@@ -10,7 +10,7 @@
 
 **Please add your suggestions for what I should add to it in the Issues Tab, along with any bugs**
 
-#### **[Download](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/Windows-Toolkit.cmd)**
+#### **[Download](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/Windows-Toolkit.cmd)** **[Full Feature List](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/changelog.md)**
 
 ## Available Options:
 
@@ -32,7 +32,7 @@
 
 **Context Menu**
 
-**AND MUCH MORE!!** (FULL CHANGELOG HERE)
+**AND MUCH MORE!!** (FULL CHANGELOG [HERE](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/changelog.md))
 
 ![ToolScreen](https://github.com/Empyreal96/win-10-services-toolbox/blob/master/Update%20Switch%20Screens/screen2.gif)
 
