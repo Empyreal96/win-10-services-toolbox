@@ -1,8 +1,22 @@
 # Windows 10 Toolbox - Changelog/Features
 
+
+
 ```
-30th Aug: 
-		Got my arse in gear and created this Document with list of current features as of this day.
+31st Aug 2020: - Started restructuring:
+
+- Moved UWP Smartscreen Filter and Defender Sample Submission from 'Misc' to 'Windows Defender and Security'
+- Started to comment on sections of code.
+- OneDrive, Windows Optional Features and Metro-UI Apps now live in Windows Programs and Features. 
+- Repurposed Powershell Tweaks to System Health, powershell tweaks I feel isn't a good category as other catagorues use powershell commands.
+- Finished Touchscreen Tweaks menu.
+```
+
+
+
+```
+30th Aug 2020: 
+- Got my arse in gear and created this Document with list of current features as of this day.
 ```
 
 Feature list:

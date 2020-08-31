@@ -12,6 +12,24 @@
 
 #### **[Download](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/Windows-Toolkit.cmd)** **[Full Feature List](https://github.com/Empyreal96/win-10-services-toolbox/raw/master/changelog.md)**
 
+### What's changed since last update?
+
+```
+Started restructuring (I will be updating with a few changes at a time for testers):
+
+- Moved UWP Smartscreen Filter and Defender Sample Submission from 'Misc' to 'Windows Defender and Security'
+
+- Started to comment on sections of code.
+
+- OneDrive, Windows Optional Features and Metro-UI Apps now live in Windows Programs and Features. 
+
+- Repurposed Powershell Tweaks to System Health, powershell tweaks I feel isn't a good category as other catagorues use powershell commands.
+
+- Finished Touchscreen Tweaks menu.
+```
+
+
+
 ## Available Options:
 
 **Windows Update**
@@ -37,5 +55,3 @@
 ![ToolScreen](https://github.com/Empyreal96/win-10-services-toolbox/blob/master/Update%20Switch%20Screens/screen2.gif)
 
 
-
-**Update-Service-Tool.bat** - A little batch to start and stop win updates on the go, also has some safe to disable services because its pulled from my main project over at XDA which is ongoing work in progress.
