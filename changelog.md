@@ -3,6 +3,18 @@
 
 
 ```
+3rd September 2020:
+
+All aimed at C: Drive at the moment;
+-Defrag: Scan and Execute
+-CHKDSK: Scan and Execute on next boot
+-CompactOS: Scan and Execute
+(basic comments in code for these commands)
+```
+
+
+
+```
 31st Aug 2020: - Started restructuring:
 
 - Moved UWP Smartscreen Filter and Defender Sample Submission from 'Misc' to 'Windows Defender and Security'

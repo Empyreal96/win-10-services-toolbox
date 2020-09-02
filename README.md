@@ -15,17 +15,11 @@
 ### What's changed since last update?
 
 ```
-Started restructuring (I will be updating with a few changes at a time for testers):
-
-- Moved UWP Smartscreen Filter and Defender Sample Submission from 'Misc' to 'Windows Defender and Security'
-
-- Started to comment on sections of code.
-
-- OneDrive, Windows Optional Features and Metro-UI Apps now live in Windows Programs and Features. 
-
-- Repurposed Powershell Tweaks to System Health, powershell tweaks I feel isn't a good category as other catagorues use powershell commands.
-
-- Finished Touchscreen Tweaks menu.
+All aimed at C: Drive at the moment;
+-Defrag: Scan and Execute
+-CHKDSK: Scan and Execute on next boot
+-CompactOS: Scan and Execute
+(basic comments in code for these commands)
 ```
 
 
